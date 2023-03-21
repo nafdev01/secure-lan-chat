@@ -57,7 +57,7 @@
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>text</string>
     </property>
     <property name="pixmap">
      <pixmap>../qrcode.png</pixmap>

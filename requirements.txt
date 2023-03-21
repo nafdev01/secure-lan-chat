@@ -1,22 +1,13 @@
 asttokens
 backcall
-black
-click
 decorator
 executing
-ifaddr
 ipython
 jedi
 matplotlib-inline
-mypy-extensions
-netifaces
-packaging
 parso
-pathspec
 pexpect
 pickleshare
-Pillow
-platformdirs
 prompt-toolkit
 ptyprocess
 pure-eval
@@ -32,4 +23,3 @@ stack-data
 traitlets
 typing_extensions
 wcwidth
-zeroconf
