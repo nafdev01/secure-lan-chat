@@ -105,7 +105,6 @@ class Ui_MainWindow(object):
             errorBox.setText("This is the main text")
             errorBox.setIcon(QMessageBox.Warning)
             errorBox.setStandardButtons(QMessageBox.Retry)
-            # errorBox.setDefaultButton(QMessageBox.Retry)
             errorBox.setInformativeText("There were errors in this form")
             for field, error in signup_form.errors.items():
                 formErrors += f"{field}: {error}"
@@ -115,10 +114,6 @@ class Ui_MainWindow(object):
             self.signupButton.adjustSize()
 
             x = errorBox.exec_()
-
-            # print("There were errors in the form:\n")
-            # for field, error in signup_form.errors.items():
-            #     print(f"{field}: {error}")
 
 
 if __name__ == "__main__":
