@@ -114,7 +114,6 @@ class Ui_MainWindow(object):
             self.signupButton.setText("Try Again")
             self.signupButton.adjustSize()
 
-
             x = errorBox.exec_()
 
             # print("There were errors in the form:\n")

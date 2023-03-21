@@ -1,3 +1,11 @@
+black
+click
+ifaddr
+mypy-extensions
+packaging
+pathspec
+platformdirs
 PyQt5
 PyQt5-Qt5
 PyQt5-sip
+zeroconf
