@@ -112,6 +112,9 @@ class Ui_MainWindow(object):
         self.labelPassSign.setObjectName("labelPassSign")
         self.labelQRCode = QtWidgets.QLabel(self.tabSignup)
         self.labelQRCode.setGeometry(QtCore.QRect(410, 90, 161, 161))
+        self.labelQRCode.setText("")
+        self.labelQRCode.setPixmap(QtGui.QPixmap("UI_files/../img/chat_icon.png"))
+        self.labelQRCode.setScaledContents(True)
         self.labelQRCode.setObjectName("labelQRCode")
         self.inputPassConfSign = QtWidgets.QLineEdit(self.tabSignup)
         self.inputPassConfSign.setGeometry(QtCore.QRect(190, 190, 161, 31))
@@ -165,9 +168,8 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(0)
-        self.authTabs.setCurrentIndex(0)
+        self.authTabs.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -178,25 +180,19 @@ class Ui_MainWindow(object):
         self.label2FALog.setText(_translate("MainWindow", "2FA Code"))
         self.buttonLogin.setText(_translate("MainWindow", "Log In"))
         self.labelTitleLog.setText(_translate("MainWindow", "LOG IN"))
-        self.authTabs.setTabText(
-            self.authTabs.indexOf(self.tabLogin), _translate("MainWindow", "Login")
-        )
+        self.authTabs.setTabText(self.authTabs.indexOf(self.tabLogin), _translate("MainWindow", "Login"))
         self.labelNickSign.setText(_translate("MainWindow", "Nickname"))
         self.labelPassSign.setText(_translate("MainWindow", "Password"))
-        self.labelQRCode.setText(_translate("MainWindow", "QRCode"))
         self.labelPassConfSign.setText(_translate("MainWindow", "Confirm Password"))
         self.buttonSign.setText(_translate("MainWindow", "Sign Up"))
         self.label2FASign.setText(_translate("MainWindow", "2FA Code"))
         self.button2FAGen.setText(_translate("MainWindow", "Generate QRCode"))
         self.labelTitleSign.setText(_translate("MainWindow", "SIGN UP"))
-        self.authTabs.setTabText(
-            self.authTabs.indexOf(self.tabSignup), _translate("MainWindow", "Signup")
-        )
+        self.authTabs.setTabText(self.authTabs.indexOf(self.tabSignup), _translate("MainWindow", "Signup"))
 
 
 if __name__ == "__main__":
     import sys
-
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()

@@ -64,7 +64,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tabLogin">
        <attribute name="title">
@@ -274,7 +274,13 @@
          </rect>
         </property>
         <property name="text">
-         <string>QRCode</string>
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>../img/chat_icon.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
         </property>
        </widget>
        <widget class="QLineEdit" name="inputPassConfSign">

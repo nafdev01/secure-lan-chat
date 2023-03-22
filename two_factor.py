@@ -6,11 +6,11 @@ class TwoFactorAuth:
     def __init__(self):
         self.secret_key = pyotp.random_base32()
 
-    def generate(self):
+    def generate(self, nickname):
         qr = qrcode.QRCode(version=1, box_size=10, border=5)
         # The provisioning_uri is used to create the QR code
         provisioning_uri = pyotp.totp.TOTP(self.secret_key).provisioning_uri(
-            "nickname", issuer_name="Secure LAN Chat"
+            name=f"{nickname}", issuer_name="Secure LAN Chat"
         )
         # Add the provisioning_uri data to the QR code object
         qr.add_data(provisioning_uri)
