@@ -24,10 +24,10 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="pageConnect">
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="buttonConnServer">
       <property name="geometry">
        <rect>
         <x>230</x>

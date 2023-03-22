@@ -167,8 +167,7 @@ class Ui_MainWindow(object):
         self.stackedWidget.setCurrentIndex(0)
         self.authTabs.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
-        self.buttonConnServer.clicked.connect(self.connect_to_server)
+        
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -193,9 +192,6 @@ class Ui_MainWindow(object):
         self.authTabs.setTabText(
             self.authTabs.indexOf(self.tabSignup), _translate("MainWindow", "Signup")
         )
-
-    def connect_to_server(self):
-        self.stackedWidget.setCurrentIndex(1)
 
 
 if __name__ == "__main__":
