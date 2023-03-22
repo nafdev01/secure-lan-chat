@@ -204,15 +204,15 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-        self.buttonConnServer.clicked.connect(self.connect_server)
-        self.button2FAGen.clicked.connect(self.generate_qrcode)
-        self.buttonSign.clicked.connect(self.signup)
-        self.buttonMessageSend.clicked.connect(self.send_message)
-
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(0)
         self.authTabs.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+        self.buttonConnServer.clicked.connect(self.connect_server)
+        self.button2FAGen.clicked.connect(self.generate_qrcode)
+        self.buttonLogin.clicked.connect(self.login)
+        self.buttonMessageSend.clicked.connect(self.send_message)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -255,16 +255,20 @@ class Ui_MainWindow(object):
         self.labelQRCode.setPixmap(QtGui.QPixmap.fromImage(image))
         self.button2FAGen.setText(self.inputNickSign.text())
 
-    def signup(self):
+    def login(self):
         self.stackedWidget.setCurrentIndex(2)
 
     def send_message(self):
+        # set recipient to currently selected
+        recipient = self.comboRecipient.currentText()
         # Get message from input box
         message = self.inputMessage.toPlainText()
         # Clear input box
         self.inputMessage.clear()
         # Add message to chat display
-        self.displayMessage.append("User: " + message)
+        self.displayMessage.append(
+            f"{self.inputNickLog.text()}: {message}........('Sent to {recipient}')"
+        )
 
 
 if __name__ == "__main__":
