@@ -591,13 +591,18 @@ class Ui_MainWindow(object):
     def generate_qrcode(self):
         # Generate QR code image for two factor authentication
         self.two_factor_auth = TwoFactorAuth()
-        img = self.two_factor_auth.generate(self.inputNickSign.text())
+        img, secret_key = self.two_factor_auth.generate(self.inputNickSign.text())
+        self.secret_key = secret_key
         image = ImageQt(img.convert("RGBA"))
         self.secret_key = self.two_factor_auth.secret_key
         self.labelQRCode.setPixmap(QtGui.QPixmap.fromImage(image))
 
     def login(self):
-        self.stackedWidget.setCurrentIndex(2)
+        user_code = self.input2FALog.text()
+        secret_key = self.secret_key
+        logged_in = self.two_factor_auth.authenticate(user_code, secret_key)
+        if logged_in:
+            self.stackedWidget.setCurrentIndex(2)
 
     def send_message(self):
         # set recipient to currently selected
