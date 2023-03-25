@@ -10,7 +10,7 @@ port = 12345
 client_socket.bind(("", port))
 
 # set a timeout so the socket does not block indefinitely when trying to receive data
-client_socket.settimeout(5)
+client_socket.settimeout(15)
 
 # receive the broadcasted message
 while True:
