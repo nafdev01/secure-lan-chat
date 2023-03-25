@@ -37,7 +37,7 @@ def find_device(hostname):
 
 if __name__ == "__main__":
     # Example usage
-    device_ip = find_device("aegis.custos")
+    device_ip = find_device("kalijel")
     if device_ip:
         print("Found device at IP address:", device_ip)
     else:

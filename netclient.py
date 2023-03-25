@@ -1,25 +1,6 @@
-import socket
+import ipaddress
 
-# create a socket object
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+ip_interface = ipaddress.IPv4Interface('192.168.0.1/255.255.255.0')
+cidr_notation = ip_interface.network.prefixlen
 
-# set the port number
-port = 12345
-
-# bind the socket to a public host, and a well-known port
-client_socket.bind(("", port))
-
-# set a timeout so the socket does not block indefinitely when trying to receive data
-client_socket.settimeout(15)
-
-# receive the broadcasted message
-while True:
-    try:
-        data, address = client_socket.recvfrom(1024)
-        print("Received message: %s" % data.decode("utf-8"))
-    except socket.timeout:
-        print("No more messages.")
-        break
-
-# close the socket
-client_socket.close()
+print(cidr_notation)
