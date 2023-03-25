@@ -2,6 +2,7 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from two_factor import TwoFactorAuth
 from PIL.ImageQt import ImageQt
+from auth_signup import *
 
 
 class Ui_MainWindow(object):
@@ -313,6 +314,16 @@ class Ui_MainWindow(object):
         self.buttonGoToArchive.setAutoDefault(True)
         self.buttonGoToArchive.setFlat(False)
         self.buttonGoToArchive.setObjectName("buttonGoToArchive")
+        self.buttonLogOut = QtWidgets.QPushButton(self.pageChatActive)
+        self.buttonLogOut.setGeometry(QtCore.QRect(30, 0, 141, 31))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(False)
+        font.setWeight(50)
+        self.buttonLogOut.setFont(font)
+        self.buttonLogOut.setAutoDefault(True)
+        self.buttonLogOut.setFlat(False)
+        self.buttonLogOut.setObjectName("buttonLogOut")
         self.stackedWidget.addWidget(self.pageChatActive)
         self.pageChatArchive = QtWidgets.QWidget()
         self.pageChatArchive.setObjectName("pageChatArchive")
@@ -379,8 +390,11 @@ class Ui_MainWindow(object):
         self.actionClose.setObjectName("actionClose")
         self.actionArchives = QtWidgets.QAction(MainWindow)
         self.actionArchives.setObjectName("actionArchives")
+        self.actionMinimize = QtWidgets.QAction(MainWindow)
+        self.actionMinimize.setObjectName("actionMinimize")
         self.menuFIle.addAction(self.actionRefresh)
         self.menuFIle.addAction(self.actionClose)
+        self.menuFIle.addAction(self.actionMinimize)
         self.menuActions.addAction(self.actionCopy)
         self.menuActions.addAction(self.actionCut)
         self.menuActions.addAction(self.actionPaste)
@@ -399,6 +413,8 @@ class Ui_MainWindow(object):
         self.commandPassReset.clicked.connect(self.switch_reset)
         self.buttonGoToArchive.clicked.connect(self.go_to_archive)
         self.buttonGoToActiveChat.clicked.connect(self.go_to_active_chat)
+        self.buttonLogOut.clicked.connect(self.logout)
+        self.buttonSign.clicked.connect(self.sign_up)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -534,6 +550,7 @@ class Ui_MainWindow(object):
         self.comboRecipientActive.setItemText(3, _translate("MainWindow", "Third Year"))
         self.labelSendToActive.setText(_translate("MainWindow", "Send To:"))
         self.buttonGoToArchive.setText(_translate("MainWindow", "Archived Messages"))
+        self.buttonLogOut.setText(_translate("MainWindow", "Log Out"))
         self.labelTitleArchive.setText(
             _translate(
                 "MainWindow",
@@ -565,6 +582,8 @@ class Ui_MainWindow(object):
         self.actionClose.setShortcut(_translate("MainWindow", "Ctrl+Q"))
         self.actionArchives.setText(_translate("MainWindow", "Archives"))
         self.actionArchives.setStatusTip(_translate("MainWindow", "View Archives"))
+        self.actionMinimize.setText(_translate("MainWindow", "Minimize"))
+        self.actionMinimize.setStatusTip(_translate("MainWindow", "Minimize this app"))
 
     def connect_server(self):
         self.stackedWidget.setCurrentIndex(1)
@@ -603,6 +622,39 @@ class Ui_MainWindow(object):
     def go_to_active_chat(self):
         # go to the archives window
         self.stackedWidget.setCurrentIndex(2)
+
+    def logout(self):
+        self.stackedWidget.setCurrentIndex(1)
+
+    def sign_up(self):
+        username = self.inputNickSign.text()
+        password = self.inputPassSign.text()
+        confirm_password = self.inputPassConfSign.text()
+        signup_form = SignUpForm(username, password, confirm_password)
+        signup_form.process_form()
+        signup_form.validate_form()
+        if signup_form.is_valid:
+            self.buttonSign.setText("Sign Up Successful")
+            self.buttonSign.adjustSize()
+        else:
+            formErrors = str()
+            formErrorFields = str()
+            errorBox = QtWidgets.QMessageBox()
+            errorBox.setWindowTitle("Signup Errors")
+            errorBox.setText("There was an error when submitting this form")
+            errorBox.setIcon(QtWidgets.QMessageBox.Warning)
+            errorBox.setStandardButtons(QtWidgets.QMessageBox.Retry)
+            for field, error in signup_form.errors.items():
+                formErrors += f"{error}\n"
+                formErrorFields += f"{field}, "
+            errorBox.setInformativeText(
+                f"Check the format of the {formErrorFields} fields"
+            )
+            errorBox.setDetailedText(formErrors)
+            self.buttonSign.setText("Try Again")
+            self.buttonSign.adjustSize()
+
+            errorBox.exec_()
 
 
 if __name__ == "__main__":
