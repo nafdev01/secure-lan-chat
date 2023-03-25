@@ -8,7 +8,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         # Generate QR code image for two factor authentication
         self.two_factor_auth = TwoFactorAuth()
-        img = self.two_factor_auth.generate()
+        img = self.two_factor_auth.generate("user")
         self.secret_key = self.two_factor_auth.secret_key
 
         MainWindow.setObjectName("MainWindow")
