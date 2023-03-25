@@ -17,9 +17,9 @@
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>0</y>
-      <width>751</width>
+      <x>20</x>
+      <y>20</y>
+      <width>761</width>
       <height>531</height>
      </rect>
     </property>
@@ -30,7 +30,7 @@
      <widget class="QPushButton" name="buttonConnServer">
       <property name="geometry">
        <rect>
-        <x>230</x>
+        <x>260</x>
         <y>220</y>
         <width>211</width>
         <height>91</height>
@@ -52,10 +52,10 @@
      <widget class="QTabWidget" name="authTabs">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>50</y>
-        <width>651</width>
-        <height>451</height>
+        <x>10</x>
+        <y>10</y>
+        <width>731</width>
+        <height>501</height>
        </rect>
       </property>
       <property name="font">
@@ -64,7 +64,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tabLogin">
        <attribute name="title">
@@ -75,17 +75,20 @@
          <rect>
           <x>310</x>
           <y>110</y>
-          <width>161</width>
+          <width>241</width>
           <height>31</height>
          </rect>
+        </property>
+        <property name="placeholderText">
+         <string>Enter your Nickname</string>
         </property>
        </widget>
        <widget class="QLabel" name="labelNickLog">
         <property name="geometry">
          <rect>
-          <x>140</x>
+          <x>170</x>
           <y>110</y>
-          <width>131</width>
+          <width>91</width>
           <height>31</height>
          </rect>
         </property>
@@ -104,20 +107,26 @@
          <rect>
           <x>310</x>
           <y>160</y>
-          <width>161</width>
+          <width>241</width>
           <height>31</height>
          </rect>
         </property>
+        <property name="text">
+         <string/>
+        </property>
         <property name="echoMode">
          <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Enter your password</string>
         </property>
        </widget>
        <widget class="QLabel" name="labelPassLog">
         <property name="geometry">
          <rect>
-          <x>140</x>
+          <x>170</x>
           <y>160</y>
-          <width>131</width>
+          <width>81</width>
           <height>31</height>
          </rect>
         </property>
@@ -136,20 +145,26 @@
          <rect>
           <x>310</x>
           <y>210</y>
-          <width>161</width>
+          <width>241</width>
           <height>31</height>
          </rect>
         </property>
+        <property name="text">
+         <string/>
+        </property>
         <property name="echoMode">
          <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Enter your 6 digit 2FA Code</string>
         </property>
        </widget>
        <widget class="QLabel" name="label2FALog">
         <property name="geometry">
          <rect>
-          <x>140</x>
+          <x>170</x>
           <y>210</y>
-          <width>131</width>
+          <width>101</width>
           <height>31</height>
          </rect>
         </property>
@@ -166,20 +181,27 @@
        <widget class="QPushButton" name="buttonLogin">
         <property name="geometry">
          <rect>
-          <x>270</x>
-          <y>300</y>
-          <width>101</width>
-          <height>31</height>
+          <x>250</x>
+          <y>260</y>
+          <width>181</width>
+          <height>41</height>
          </rect>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
-         <string>Log In</string>
+         <string>LOG IN</string>
         </property>
        </widget>
        <widget class="QLabel" name="labelTitleLog">
         <property name="geometry">
          <rect>
-          <x>280</x>
+          <x>320</x>
           <y>30</y>
           <width>101</width>
           <height>31</height>
@@ -195,7 +217,46 @@
          </font>
         </property>
         <property name="text">
-         <string>LOG IN</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;LOG IN&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelInstructLog">
+        <property name="geometry">
+         <rect>
+          <x>240</x>
+          <y>60</y>
+          <width>291</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Fill in all the fields below using your credentials</string>
+        </property>
+       </widget>
+       <widget class="QCommandLinkButton" name="commandPassReset">
+        <property name="geometry">
+         <rect>
+          <x>280</x>
+          <y>330</y>
+          <width>171</width>
+          <height>27</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <italic>true</italic>
+         </font>
+        </property>
+        <property name="text">
+         <string>Forgot your password?</string>
         </property>
        </widget>
       </widget>
@@ -206,17 +267,26 @@
        <widget class="QLineEdit" name="inputNickSign">
         <property name="geometry">
          <rect>
-          <x>190</x>
+          <x>220</x>
           <y>90</y>
-          <width>161</width>
+          <width>231</width>
           <height>31</height>
          </rect>
+        </property>
+        <property name="toolTip">
+         <string>Nickname must be at least 6 characters long</string>
+        </property>
+        <property name="dragEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="placeholderText">
+         <string/>
         </property>
        </widget>
        <widget class="QLabel" name="labelNickSign">
         <property name="geometry">
          <rect>
-          <x>40</x>
+          <x>70</x>
           <y>90</y>
           <width>91</width>
           <height>31</height>
@@ -235,11 +305,14 @@
        <widget class="QLineEdit" name="inputPassSign">
         <property name="geometry">
          <rect>
-          <x>190</x>
+          <x>220</x>
           <y>140</y>
-          <width>161</width>
+          <width>231</width>
           <height>31</height>
          </rect>
+        </property>
+        <property name="toolTip">
+         <string>The password must be at least 8 character long, and include at least one undercase letter, one lowercase letter, one character and one special character</string>
         </property>
         <property name="echoMode">
          <enum>QLineEdit::Password</enum>
@@ -248,7 +321,7 @@
        <widget class="QLabel" name="labelPassSign">
         <property name="geometry">
          <rect>
-          <x>40</x>
+          <x>70</x>
           <y>140</y>
           <width>91</width>
           <height>31</height>
@@ -267,8 +340,8 @@
        <widget class="QLabel" name="labelQRCode">
         <property name="geometry">
          <rect>
-          <x>410</x>
-          <y>90</y>
+          <x>520</x>
+          <y>120</y>
           <width>161</width>
           <height>161</height>
          </rect>
@@ -286,11 +359,14 @@
        <widget class="QLineEdit" name="inputPassConfSign">
         <property name="geometry">
          <rect>
-          <x>190</x>
+          <x>220</x>
           <y>190</y>
-          <width>161</width>
+          <width>231</width>
           <height>31</height>
          </rect>
+        </property>
+        <property name="toolTip">
+         <string>The confirm passsword fieldmust match the password field</string>
         </property>
         <property name="text">
          <string/>
@@ -302,7 +378,7 @@
        <widget class="QLabel" name="labelPassConfSign">
         <property name="geometry">
          <rect>
-          <x>40</x>
+          <x>70</x>
           <y>190</y>
           <width>141</width>
           <height>31</height>
@@ -321,24 +397,34 @@
        <widget class="QPushButton" name="buttonSign">
         <property name="geometry">
          <rect>
-          <x>180</x>
+          <x>210</x>
           <y>310</y>
-          <width>101</width>
-          <height>31</height>
+          <width>171</width>
+          <height>41</height>
          </rect>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
-         <string>Sign Up</string>
+         <string>SIGN UP</string>
         </property>
        </widget>
        <widget class="QLineEdit" name="input2FASign">
         <property name="geometry">
          <rect>
-          <x>190</x>
+          <x>220</x>
           <y>240</y>
-          <width>161</width>
+          <width>231</width>
           <height>31</height>
          </rect>
+        </property>
+        <property name="toolTip">
+         <string>Enter the 6 digit code geenrated by the authenticator app</string>
         </property>
         <property name="echoMode">
          <enum>QLineEdit::Password</enum>
@@ -347,7 +433,7 @@
        <widget class="QLabel" name="label2FASign">
         <property name="geometry">
          <rect>
-          <x>40</x>
+          <x>70</x>
           <y>240</y>
           <width>101</width>
           <height>31</height>
@@ -366,11 +452,14 @@
        <widget class="QPushButton" name="button2FAGen">
         <property name="geometry">
          <rect>
-          <x>420</x>
-          <y>310</y>
+          <x>520</x>
+          <y>320</y>
           <width>141</width>
           <height>31</height>
          </rect>
+        </property>
+        <property name="toolTip">
+         <string>Generate A New QRCode</string>
         </property>
         <property name="text">
          <string>Generate QRCode</string>
@@ -379,8 +468,8 @@
        <widget class="QLabel" name="labelTitleSign">
         <property name="geometry">
          <rect>
-          <x>260</x>
-          <y>30</y>
+          <x>310</x>
+          <y>10</y>
           <width>101</width>
           <height>31</height>
          </rect>
@@ -398,14 +487,280 @@
          <string>SIGN UP</string>
         </property>
        </widget>
+       <widget class="QLabel" name="labelQRCodeSign">
+        <property name="geometry">
+         <rect>
+          <x>520</x>
+          <y>40</y>
+          <width>171</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Generate the QRCode After Entering Your Nickname and Scan it using an Authenticator App to Set Up 2FA</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelInstructSign">
+        <property name="geometry">
+         <rect>
+          <x>240</x>
+          <y>40</y>
+          <width>251</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Fill in all the fields below as required</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tabResetPass">
+       <attribute name="title">
+        <string>Reset Password</string>
+       </attribute>
+       <widget class="QLabel" name="label2FAReset">
+        <property name="geometry">
+         <rect>
+          <x>120</x>
+          <y>160</y>
+          <width>101</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>2FA Code</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelPassConfReset">
+        <property name="geometry">
+         <rect>
+          <x>120</x>
+          <y>210</y>
+          <width>171</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Confirm New Password</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="input2FAReset">
+        <property name="geometry">
+         <rect>
+          <x>320</x>
+          <y>160</y>
+          <width>231</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>Enter the 6 digit code geenrated by the authenticator app</string>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Enter 6 digit Authenticator Code</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="inputPassConfReset">
+        <property name="geometry">
+         <rect>
+          <x>320</x>
+          <y>210</y>
+          <width>231</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>The confirm new passsword fieldmust match the new password field</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Confirm Your New Password</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="inputPassReset">
+        <property name="geometry">
+         <rect>
+          <x>320</x>
+          <y>260</y>
+          <width>231</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>The new password must be at least 8 character long, and include at least one undercase letter, one lowercase letter, one character and one special character.</string>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Enter Your New Password</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelPassReset">
+        <property name="geometry">
+         <rect>
+          <x>120</x>
+          <y>260</y>
+          <width>121</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>New Password</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelNickReset">
+        <property name="geometry">
+         <rect>
+          <x>120</x>
+          <y>100</y>
+          <width>121</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Nickname</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="inputNickReset">
+        <property name="geometry">
+         <rect>
+          <x>320</x>
+          <y>100</y>
+          <width>231</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>Enter your nickname</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="dragEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="placeholderText">
+         <string>Enter Your Nickname</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelTitleReset">
+        <property name="geometry">
+         <rect>
+          <x>240</x>
+          <y>20</y>
+          <width>221</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>75</weight>
+          <italic>false</italic>
+          <bold>true</bold>
+          <underline>true</underline>
+         </font>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;RESET PASSWORD&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelInstructReset">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>60</y>
+          <width>291</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Fill in all the fields below to reset your password</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="buttonReset">
+        <property name="geometry">
+         <rect>
+          <x>250</x>
+          <y>320</y>
+          <width>201</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>RESET PASSWORD</string>
+        </property>
+       </widget>
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="pageChat">
-     <widget class="QPushButton" name="buttonMessageSend">
+    <widget class="QWidget" name="pageChatActive">
+     <widget class="QPushButton" name="buttonMessageSendActive">
       <property name="geometry">
        <rect>
-        <x>130</x>
+        <x>50</x>
         <y>500</y>
         <width>141</width>
         <height>31</height>
@@ -413,13 +768,13 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>14</pointsize>
+        <pointsize>15</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
       <property name="text">
-       <string>Send</string>
+       <string>SEND</string>
       </property>
       <property name="autoDefault">
        <bool>true</bool>
@@ -428,7 +783,7 @@
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="QTextEdit" name="inputMessage">
+     <widget class="QTextEdit" name="inputMessageActive">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -438,20 +793,20 @@
        </rect>
       </property>
      </widget>
-     <widget class="QTextEdit" name="displayMessage">
+     <widget class="QTextEdit" name="displayMessageActive">
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>20</y>
+        <y>40</y>
         <width>721</width>
-        <height>381</height>
+        <height>361</height>
        </rect>
       </property>
       <property name="readOnly">
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QComboBox" name="comboRecipient">
+     <widget class="QComboBox" name="comboRecipientActive">
       <property name="geometry">
        <rect>
         <x>590</x>
@@ -481,7 +836,7 @@
        </property>
       </item>
      </widget>
-     <widget class="QLabel" name="labelSendTo">
+     <widget class="QLabel" name="labelSendToActive">
       <property name="geometry">
        <rect>
         <x>510</x>
@@ -501,6 +856,121 @@
        <string>Send To:</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="buttonGoToArchive">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>0</y>
+        <width>141</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Archived Messages</string>
+      </property>
+      <property name="autoDefault">
+       <bool>true</bool>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="pageChatArchive">
+     <widget class="QTextEdit" name="displayMessageArchive">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>80</y>
+        <width>721</width>
+        <height>441</height>
+       </rect>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelTitleArchive">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>40</y>
+        <width>221</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <weight>75</weight>
+        <italic>false</italic>
+        <bold>true</bold>
+        <underline>true</underline>
+       </font>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;ARCHIVED MESSAGES&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonDeleteHistory">
+      <property name="geometry">
+       <rect>
+        <x>620</x>
+        <y>10</y>
+        <width>111</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Delete History</string>
+      </property>
+      <property name="autoDefault">
+       <bool>true</bool>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonGoToActiveChat">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>10</y>
+        <width>111</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Back to Chat</string>
+      </property>
+      <property name="autoDefault">
+       <bool>true</bool>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -513,8 +983,98 @@
      <height>24</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFIle">
+    <property name="title">
+     <string>FIle</string>
+    </property>
+    <addaction name="actionRefresh"/>
+    <addaction name="actionClose"/>
+   </widget>
+   <widget class="QMenu" name="menuActions">
+    <property name="title">
+     <string>Actions</string>
+    </property>
+    <addaction name="actionCopy"/>
+    <addaction name="actionCut"/>
+    <addaction name="actionPaste"/>
+   </widget>
+   <addaction name="menuFIle"/>
+   <addaction name="menuActions"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Refresh</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="text">
+    <string>Copy</string>
+   </property>
+   <property name="statusTip">
+    <string>Copy Text</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="text">
+    <string>Cut</string>
+   </property>
+   <property name="statusTip">
+    <string>Move Text</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="text">
+    <string>Paste</string>
+   </property>
+   <property name="statusTip">
+    <string>Paste Text</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="actionRefresh">
+   <property name="text">
+    <string>Refresh</string>
+   </property>
+   <property name="statusTip">
+    <string>Refresh your Connection</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionQuit_2">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>Close</string>
+   </property>
+   <property name="statusTip">
+    <string>Close the Application</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionArchives">
+   <property name="text">
+    <string>Archives</string>
+   </property>
+   <property name="statusTip">
+    <string>View Archives</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
