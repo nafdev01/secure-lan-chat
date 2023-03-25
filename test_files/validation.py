@@ -70,3 +70,5 @@ class TwoFactorValidator(FormValidator):
         two_factor_code = self.data.get("two_factor_code")
         if not two_factor_code:
             self.errors["two_factor_code"] = "Two factor code is required"
+        elif len(two_factor_code) != 6:
+            self.errors["two_factor_code"] = "Two factor code is 6 characters long"
