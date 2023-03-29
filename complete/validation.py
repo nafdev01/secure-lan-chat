@@ -25,8 +25,8 @@ class UserNameValidator(FormValidator):
 
 class SecretKeyValidator(FormValidator):
     def validate(self):
-        email = self.data.get("secret_key")
-        if not email:
+        secret_key = self.data.get("secret_key")
+        if not secret_key:
             self.errors["secret_key"] = "Generate a QRCode Before You Scan"
 
 

@@ -1,8 +1,8 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PIL.ImageQt import ImageQt
-from auth_signup import *
-from auth_login import *
+from auth_backend import *
+
 
 
 class Ui_MainWindow(object):
@@ -10,6 +10,8 @@ class Ui_MainWindow(object):
         super().__init__()
         self.signup_form = SignUp()
         self.login_form = LogIn()
+        self.session_manager = Session()
+        self.log_manager = Log()
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -419,6 +421,7 @@ class Ui_MainWindow(object):
         img, secret_key = self.signup_form.generate(nickname)
         image = ImageQt(img.convert("RGBA"))
         self.labelQRCode.setPixmap(QtGui.QPixmap.fromImage(image))
+        self.log_manager.submit_log(nickname, "Generated QRCode")
 
     def send_message(self):
         # set recipient to currently selected
@@ -445,6 +448,7 @@ class Ui_MainWindow(object):
         self.stackedWidget.setCurrentIndex(2)
 
     def logout(self):
+        self.session_manager.set_offline()
         self.stackedWidget.setCurrentIndex(1)
 
     def login(self):
@@ -472,21 +476,26 @@ class Ui_MainWindow(object):
                 successBox.setText(f"You Have Logged In Successfully")
                 successBox.setIcon(QtWidgets.QMessageBox.Information)
                 successBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                self.log_manager.submit_log(nickname, "Successfully logged in")
+                self.session_manager.set_online(nickname)
                 self.signup_form.reset(
                     self.inputNickLog,
                     self.inputPassLog,
                     self.input2FALog,
                 )
-                successBox.exec_()
                 self.stackedWidget.setCurrentIndex(2)
+                successBox.exec_()
             else:
+                self.log_manager.submit_log(nickname, "Failed log in")
                 authErrors = str()
                 for error, value in self.login_form.errors.items():
                     authErrors += f"{error}{value}\n"
 
                 errorBox = QtWidgets.QMessageBox()
                 errorBox.setWindowTitle("Wrong Credentials")
-                errorBox.setText(f"Please enter valid login credentials.\n All fields are case sensitive")
+                errorBox.setText(
+                    f"Please enter valid login credentials.\n All fields are case sensitive"
+                )
                 errorBox.setIcon(QtWidgets.QMessageBox.Critical)
                 errorBox.setStandardButtons(QtWidgets.QMessageBox.Retry)
                 errorBox.exec_()
@@ -502,6 +511,7 @@ class Ui_MainWindow(object):
             if not self.signup_form.get_user(nickname):
                 create_user = self.signup_form.store_user_info()
                 if create_user:
+                    self.log_manager.submit_log(nickname, "Successful sign up")
                     self.signup_form.reset(
                         self.inputNickSign,
                         self.inputPassSign,
@@ -515,13 +525,13 @@ class Ui_MainWindow(object):
                     self.authTabs.setCurrentIndex(0)
                     successBox.exec_()
             else:
+                self.log_manager.submit_log(nickname, "Failed duplicate sign up")
                 errorBox = QtWidgets.QMessageBox()
                 errorBox.setWindowTitle("Signup Errors")
                 errorBox.setText("User with that nickname already exists")
                 errorBox.setIcon(QtWidgets.QMessageBox.Critical)
                 errorBox.setStandardButtons(QtWidgets.QMessageBox.Retry)
                 errorBox.exec_()
-
         else:
             formErrors = str()
             formErrorFields = str()

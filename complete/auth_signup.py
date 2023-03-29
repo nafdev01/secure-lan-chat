@@ -75,6 +75,28 @@ class SignUp:
         c = conn.cursor()
         c.execute(
             """
+            CREATE TABLE IF NOT EXISTS "user_logs" (
+                "log_id"	INTEGER,
+                "username"	TEXT NOT NULL,
+                "action"	TEXT NOT NULL,
+                FOREIGN KEY("username") REFERENCES "users"("username"),
+                PRIMARY KEY("log_id" AUTOINCREMENT)
+);
+        """
+        )
+        c.execute(
+            """
+        CREATE TABLE IF NOT EXISTS "user_sessions" (
+            "session_id"	INTEGER,
+            "username"	TEXT NOT NULL,
+            "status"	TEXT NOT NULL DEFAULT 'offline',
+            FOREIGN KEY("username") REFERENCES "users"("username"),
+            PRIMARY KEY("session_id" AUTOINCREMENT)
+            );
+            """
+        )
+        c.execute(
+            """
         CREATE TABLE IF NOT EXISTS "users" (
             "user_id" INTEGER,
             "username" TEXT,
@@ -82,7 +104,7 @@ class SignUp:
             "salt" TEXT,
             "secret_key" TEXT,
             PRIMARY KEY("user_id" AUTOINCREMENT)
-        )
+        );
     """
         )
         c.execute("SELECT username FROM users WHERE username=?", (username,))
@@ -112,6 +134,10 @@ class SignUp:
                 self.salt,
                 self.secret_key,
             ),
+        )
+        c.execute(
+            "INSERT INTO user_sessions (username, status) VALUES (?, ?)",
+            (self.username, "offline"),
         )
         conn.commit()
         conn.close()
