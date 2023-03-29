@@ -64,7 +64,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tabLogin">
        <attribute name="title">
@@ -268,7 +268,7 @@
         <property name="geometry">
          <rect>
           <x>220</x>
-          <y>90</y>
+          <y>110</y>
           <width>231</width>
           <height>31</height>
          </rect>
@@ -287,7 +287,7 @@
         <property name="geometry">
          <rect>
           <x>70</x>
-          <y>90</y>
+          <y>110</y>
           <width>91</width>
           <height>31</height>
          </rect>
@@ -306,7 +306,7 @@
         <property name="geometry">
          <rect>
           <x>220</x>
-          <y>140</y>
+          <y>160</y>
           <width>231</width>
           <height>31</height>
          </rect>
@@ -322,7 +322,7 @@
         <property name="geometry">
          <rect>
           <x>70</x>
-          <y>140</y>
+          <y>160</y>
           <width>91</width>
           <height>31</height>
          </rect>
@@ -360,7 +360,7 @@
         <property name="geometry">
          <rect>
           <x>220</x>
-          <y>190</y>
+          <y>210</y>
           <width>231</width>
           <height>31</height>
          </rect>
@@ -379,7 +379,7 @@
         <property name="geometry">
          <rect>
           <x>70</x>
-          <y>190</y>
+          <y>210</y>
           <width>141</width>
           <height>31</height>
          </rect>
@@ -414,41 +414,6 @@
          <string>SIGN UP</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="input2FASign">
-        <property name="geometry">
-         <rect>
-          <x>220</x>
-          <y>240</y>
-          <width>231</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>Enter the 6 digit code geenrated by the authenticator app</string>
-        </property>
-        <property name="echoMode">
-         <enum>QLineEdit::Password</enum>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label2FASign">
-        <property name="geometry">
-         <rect>
-          <x>70</x>
-          <y>240</y>
-          <width>101</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>2FA Code</string>
-        </property>
-       </widget>
        <widget class="QPushButton" name="button2FAGen">
         <property name="geometry">
          <rect>
@@ -468,8 +433,8 @@
        <widget class="QLabel" name="labelTitleSign">
         <property name="geometry">
          <rect>
-          <x>310</x>
-          <y>10</y>
+          <x>240</x>
+          <y>30</y>
           <width>101</width>
           <height>31</height>
          </rect>
@@ -484,7 +449,7 @@
          </font>
         </property>
         <property name="text">
-         <string>SIGN UP</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;SIGN UP&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
        <widget class="QLabel" name="labelQRCodeSign">
@@ -511,8 +476,8 @@
        <widget class="QLabel" name="labelInstructSign">
         <property name="geometry">
          <rect>
-          <x>240</x>
-          <y>40</y>
+          <x>170</x>
+          <y>70</y>
           <width>251</width>
           <height>20</height>
          </rect>
@@ -525,7 +490,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Fill in all the fields below as required</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Fill in all the fields below as required&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </widget>

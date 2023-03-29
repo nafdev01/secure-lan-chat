@@ -465,13 +465,11 @@ class Ui_MainWindow(object):
             errorBox.setStandardButtons(QtWidgets.QMessageBox.Retry)
             errorBox.exec_()
         else:
-            user_athenticated = self.login_form.get_user(nickname)
+            user_athenticated = self.login_form.authenticate_user()
             if user_athenticated:
                 successBox = QtWidgets.QMessageBox()
                 successBox.setWindowTitle("Success")
-                successBox.setText(
-                    f"You Have Logged In Successfully as \nUsername: {self.login_form.username}\nsalt:{self.login_form.salt}\nPassword:{self.login_form.password}\nsecret:{self.login_form.secret_key}"
-                )
+                successBox.setText(f"You Have Logged In Successfully")
                 successBox.setIcon(QtWidgets.QMessageBox.Information)
                 successBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
                 self.signup_form.reset(
@@ -479,12 +477,16 @@ class Ui_MainWindow(object):
                     self.inputPassLog,
                     self.input2FALog,
                 )
-                # self.stackedWidget.setCurrentIndex(2)
                 successBox.exec_()
+                self.stackedWidget.setCurrentIndex(2)
             else:
+                authErrors = str()
+                for error, value in self.login_form.errors.items():
+                    authErrors += f"{error}{value}\n"
+
                 errorBox = QtWidgets.QMessageBox()
-                errorBox.setWindowTitle("No User FOund")
-                errorBox.setText(f"No user found")
+                errorBox.setWindowTitle("Wrong Credentials")
+                errorBox.setText(f"Please enter valid login credentials.\n All fields are case sensitive")
                 errorBox.setIcon(QtWidgets.QMessageBox.Critical)
                 errorBox.setStandardButtons(QtWidgets.QMessageBox.Retry)
                 errorBox.exec_()

@@ -73,6 +73,18 @@ class SignUp:
         conn = sqlite3.connect("secure_chat.db")
         conn.row_factory = sqlite3.Row
         c = conn.cursor()
+        c.execute(
+            """
+        CREATE TABLE IF NOT EXISTS "users" (
+            "user_id" INTEGER,
+            "username" TEXT,
+            "password" TEXT,
+            "salt" TEXT,
+            "secret_key" TEXT,
+            PRIMARY KEY("user_id" AUTOINCREMENT)
+        )
+    """
+        )
         c.execute("SELECT username FROM users WHERE username=?", (username,))
         user = c.fetchone()
         conn.close()

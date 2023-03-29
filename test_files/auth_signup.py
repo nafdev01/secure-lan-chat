@@ -3,7 +3,7 @@ from validation import *
 # from auth_backend import *
 
 
-class SignUpForm:
+class SignUp:
     def __init__(self, username, password, confirm_password, two_factor_code):
         self.username = username
         self.password = password
