@@ -8,10 +8,64 @@ import random
 import string
 
 
+def initialize_tables_if_not_exists():
+    conn = sqlite3.connect("secure_chat.db")
+    conn.row_factory = sqlite3.Row
+    c = conn.cursor()
+    c.execute(
+        """
+    CREATE TABLE IF NOT EXISTS "users" (
+        "user_id" INTEGER,
+        "username" TEXT,
+        "password" TEXT,
+        "salt" TEXT,
+        "secret_key" TEXT,
+        PRIMARY KEY("user_id" AUTOINCREMENT)
+    );
+"""
+    )
+    c.execute(
+        """
+        CREATE TABLE IF NOT EXISTS "user_messages" (
+            "message_id"	INTEGER,
+            "sender"	TEXT NOT NULL,
+            "recipient"	TEXT NOT NULL,
+            "content"	TEXT NOT NULL,
+            PRIMARY KEY("message_id" AUTOINCREMENT)
+);
+    """
+    )
+    c.execute(
+        """
+        CREATE TABLE IF NOT EXISTS "user_logs" (
+            "log_id"	INTEGER,
+            "username"	TEXT NOT NULL,
+            "action"	TEXT NOT NULL,
+            FOREIGN KEY("username") REFERENCES "users"("username"),
+            PRIMARY KEY("log_id" AUTOINCREMENT)
+);
+    """
+    )
+    c.execute(
+        """
+    CREATE TABLE IF NOT EXISTS "user_sessions" (
+        "session_id"	INTEGER,
+        "username"	TEXT NOT NULL,
+        "status"	TEXT NOT NULL DEFAULT 'offline',
+        FOREIGN KEY("username") REFERENCES "users"("username"),
+        PRIMARY KEY("session_id" AUTOINCREMENT)
+        );
+        """
+    )
+
+    conn.close()
+
+
 class Session:
     def __init__(self):
         self.username = None
         self.status = None
+        self.active_users = None
 
     def set_online(self, username):
         self.username = username
@@ -21,6 +75,25 @@ class Session:
     def set_offline(self):
         self.status = "offline"
         self.update_session(self.username, self.status)
+
+
+    def get_active_users(self):
+        # connect to the database
+        conn = sqlite3.connect("secure_chat.db")
+        # create a cursor object
+        c = conn.cursor()
+        # execute the select query to get the usernames of online users
+        c.execute("SELECT username FROM user_sessions WHERE status = ?", ("online",))
+        # fetch the results
+        results = c.fetchall()
+        # close the cursor
+        c.close()
+        # close the database connection
+        conn.close()
+        # create an array of usernames
+        usernames = [result[0] for result in results]
+        # return the array of usernames
+        self.active_users = usernames
 
     def update_session(self, username, status):
         # connect to the database
@@ -35,7 +108,6 @@ class Session:
         conn.commit()
         # close the database connection
         conn.close()
-        self.reset
 
     def reset(self):
         self.__init__()
@@ -124,40 +196,6 @@ class SignUp:
         conn = sqlite3.connect("secure_chat.db")
         conn.row_factory = sqlite3.Row
         c = conn.cursor()
-        c.execute(
-            """
-            CREATE TABLE IF NOT EXISTS "user_logs" (
-                "log_id"	INTEGER,
-                "username"	TEXT NOT NULL,
-                "action"	TEXT NOT NULL,
-                FOREIGN KEY("username") REFERENCES "users"("username"),
-                PRIMARY KEY("log_id" AUTOINCREMENT)
-);
-        """
-        )
-        c.execute(
-            """
-        CREATE TABLE IF NOT EXISTS "user_sessions" (
-            "session_id"	INTEGER,
-            "username"	TEXT NOT NULL,
-            "status"	TEXT NOT NULL DEFAULT 'offline',
-            FOREIGN KEY("username") REFERENCES "users"("username"),
-            PRIMARY KEY("session_id" AUTOINCREMENT)
-            );
-            """
-        )
-        c.execute(
-            """
-        CREATE TABLE IF NOT EXISTS "users" (
-            "user_id" INTEGER,
-            "username" TEXT,
-            "password" TEXT,
-            "salt" TEXT,
-            "secret_key" TEXT,
-            PRIMARY KEY("user_id" AUTOINCREMENT)
-        );
-    """
-        )
         c.execute("SELECT username FROM users WHERE username=?", (username,))
         user = c.fetchone()
         conn.close()

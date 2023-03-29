@@ -2,7 +2,7 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PIL.ImageQt import ImageQt
 from auth_backend import *
-
+from messages import Message
 
 
 class Ui_MainWindow(object):
@@ -12,6 +12,9 @@ class Ui_MainWindow(object):
         self.login_form = LogIn()
         self.session_manager = Session()
         self.log_manager = Log()
+        self.message_manager = Message()
+
+        initialize_tables_if_not_exists()
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -425,6 +428,7 @@ class Ui_MainWindow(object):
 
     def send_message(self):
         # set recipient to currently selected
+        sender = self.message_manager.sender
         recipient = self.comboRecipientActive.currentText()
         # Get message from input box
         message = self.inputMessageActive.toPlainText()
@@ -432,7 +436,12 @@ class Ui_MainWindow(object):
         self.inputMessageActive.clear()
         # Add message to chat display
         self.displayMessageActive.append(
-            f"{self.inputNickLog.text()}: {message}........('Sent to {recipient}')"
+            f"{sender}: {message}........('Sent to {recipient}')"
+        )
+        self.message_manager.send_message(recipient, message)
+        self.log_manager.submit_log(
+            sender,
+            f"Sent a message '{message[:15]}'... to {recipient}",
         )
 
     def switch_reset(self):
@@ -471,11 +480,21 @@ class Ui_MainWindow(object):
         else:
             user_athenticated = self.login_form.authenticate_user()
             if user_athenticated:
+                _translate = QtCore.QCoreApplication.translate
                 successBox = QtWidgets.QMessageBox()
                 successBox.setWindowTitle("Success")
                 successBox.setText(f"You Have Logged In Successfully")
                 successBox.setIcon(QtWidgets.QMessageBox.Information)
                 successBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                self.session_manager.get_active_users()
+                user_index = 0
+                for active_user in self.session_manager.active_users:
+                    self.comboRecipientActive.setItemText(
+                        user_index, _translate("MainWindow", f"{active_user}")
+                    )
+                    user_index += 1
+
+                self.message_manager.set_sender(nickname)
                 self.log_manager.submit_log(nickname, "Successfully logged in")
                 self.session_manager.set_online(nickname)
                 self.signup_form.reset(
