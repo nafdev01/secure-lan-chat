@@ -75,7 +75,7 @@ def initialize_tables_if_not_exists():
   `status` enum('offline','online') NOT NULL DEFAULT 'offline',
   PRIMARY KEY (`session_id`),
   KEY `username` (`username`),
-  CONSTRAINT `user_sessions_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
+  CONSTRAINT `user_sessions_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`))
 ;
         """
     )
