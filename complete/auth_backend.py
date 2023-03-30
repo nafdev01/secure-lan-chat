@@ -27,8 +27,13 @@ except mariadb.Error as e:
 
 
 def initialize_tables_if_not_exists():
-    c = conn.cursor()
-    c.execute(
+    try:
+        conn = mariadb.connect(**config)
+    except mariadb.Error as e:
+        print(f"Error connecting to MariaDB: {e}")
+        exit()
+    cursor = conn.cursor()
+    cursor.execute(
         """
     CREATE TABLE IF NOT EXISTS `users` (
     `user_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -41,7 +46,7 @@ def initialize_tables_if_not_exists():
     )
     """
     )
-    c.execute(
+    cursor.execute(
         """
         CREATE TABLE IF NOT EXISTS `user_messages` (
   `message_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -56,19 +61,17 @@ def initialize_tables_if_not_exists():
 )
     """
     )
-    c.execute(
+    cursor.execute(
         """
          CREATE TABLE IF NOT EXISTS  `user_logs` (
             `log_id` int(11) NOT NULL AUTO_INCREMENT,
             `user` varchar(255) NOT NULL,
             `action` text NOT NULL,
-            PRIMARY KEY (`log_id`),
-            KEY `user` (`user`),
-            CONSTRAINT `user_logs_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`username`)
+            PRIMARY KEY (`log_id`)
 )
     """
     )
-    c.execute(
+    cursor.execute(
         """
      CREATE TABLE IF NOT EXISTS `user_sessions` (
   `session_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -80,7 +83,7 @@ def initialize_tables_if_not_exists():
 )
         """
     )
-    c.close()
+    cursor.close()
     conn.close()
 
 
@@ -100,14 +103,21 @@ class Session:
         self.update_session(self.username, self.status)
 
     def get_active_users(self):
+        try:
+            conn = mariadb.connect(**config)
+        except mariadb.Error as e:
+            print(f"Error connecting to MariaDB: {e}")
+            exit()
         # create a cursor object
-        c = conn.cursor()
+        cursor = conn.cursor()
         # execute the select query to get the usernames of online users
-        c.execute("SELECT username FROM user_sessions WHERE status = ?", ("online",))
+        cursor.execute(
+            "SELECT username FROM user_sessions WHERE status = ?", ("online",)
+        )
         # fetch the results
-        results = c.fetchall()
+        results = cursor.fetchall()
         # close the cursor
-        c.close()
+        cursor.close()
         # close the database connection
         conn.close()
         # create an array of usernames
@@ -116,15 +126,22 @@ class Session:
         self.active_users = usernames
 
     def update_session(self, username, status):
+        try:
+            conn = mariadb.connect(**config)
+        except mariadb.Error as e:
+            print(f"Error connecting to MariaDB: {e}")
+            exit()
         # create a cursor object
-        c = conn.cursor()
+        cursor = conn.cursor()
         # execute the update query
-        c.execute(
+        cursor.execute(
             "UPDATE user_sessions SET status = ? WHERE username = ?", (status, username)
         )
         # commit the changes to the database
         conn.commit()
         # close the database connection
+
+        cursor.close()
         conn.close()
 
     def reset(self):
@@ -133,17 +150,23 @@ class Session:
 
 class Log:
     def submit_log(self, username, action):
+        try:
+            conn = mariadb.connect(**config)
+        except mariadb.Error as e:
+            print(f"Error connecting to MariaDB: {e}")
+            exit()
         # create a cursor object
-        c = conn.cursor()
+        cursor = conn.cursor()
         # execute the update query
-        c.execute(
-            "INSERT INTO user_logs (username, action) VALUES (%s, %s)",
+        cursor.execute(
+            "INSERT INTO user_logs (user, action) VALUES (%s, %s)",
             (username, action),
         )
         # commit the changes to the database
         conn.commit()
         # close the cursor
-        c.close()
+        cursor.close()
+        conn.close()
 
 
 class SignUp:
@@ -209,9 +232,14 @@ class SignUp:
         return [img, self.secret_key]
 
     def get_user(self, username):
-        c = conn.cursor()
-        c.execute("SELECT username FROM users WHERE username=?", (username,))
-        user = c.fetchone()
+        try:
+            conn = mariadb.connect(**config)
+        except mariadb.Error as e:
+            print(f"Error connecting to MariaDB: {e}")
+            exit()
+        cursor = conn.cursor()
+        cursor.execute("SELECT username FROM users WHERE username=?", (username,))
+        user = cursor.fetchone()
         conn.close()
         if user:
             return True
@@ -226,9 +254,14 @@ class SignUp:
         return hashed_password
 
     def store_user_info(self):
+        try:
+            conn = mariadb.connect(**config)
+        except mariadb.Error as e:
+            print(f"Error connecting to MariaDB: {e}")
+            exit()
         self.hashed_password = self.hash_password()
-        c = conn.cursor()
-        c.execute(
+        cursor = conn.cursor()
+        cursor.execute(
             "INSERT INTO users (username, password, salt, secret_key) VALUES (?, ?, ?, ?)",
             (
                 self.username,
@@ -237,12 +270,13 @@ class SignUp:
                 self.secret_key,
             ),
         )
-        c.execute(
+        cursor.execute(
             "INSERT INTO user_sessions (username, status) VALUES (?, ?)",
             (self.username, "offline"),
         )
-        conn.commit()
+        cursor.close()
         conn.close()
+
         return "User information stored successfully"
 
     def reset(self, username, password, confirm_password):
@@ -293,12 +327,17 @@ class LogIn:
         return hashed_password
 
     def get_user(self):
+        try:
+            conn = mariadb.connect(**config)
+        except mariadb.Error as e:
+            print(f"Error connecting to MariaDB: {e}")
+            exit()
         # Connect to the database
-        c = conn.cursor()
+        cursor = conn.cursor()
 
         # Query the database for the user with the given username
-        c.execute("SELECT * FROM users WHERE username=?", (self.username,))
-        user = c.fetchone()
+        cursor.execute("SELECT * FROM users WHERE username=?", (self.username,))
+        user = cursor.fetchone()
 
         # If the user was found, return their details as a dictionary
         if user is not None:
@@ -309,6 +348,8 @@ class LogIn:
             return user
         else:
             return None
+        cursor.close()
+        conn.close()
 
     def authenticate_user(self):
         authenticated = False
