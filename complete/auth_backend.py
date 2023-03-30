@@ -38,7 +38,7 @@ def initialize_tables_if_not_exists():
     `secret_key` text DEFAULT NULL,
     PRIMARY KEY (`user_id`),
     UNIQUE KEY `username` (`username`)
-    );
+    )
     """
     )
     c.execute(
@@ -53,7 +53,7 @@ def initialize_tables_if_not_exists():
   KEY `recipient` (`recipient`),
   CONSTRAINT `user_messages_ibfk_1` FOREIGN KEY (`sender`) REFERENCES `users` (`username`),
   CONSTRAINT `user_messages_ibfk_2` FOREIGN KEY (`recipient`) REFERENCES `users` (`username`)
-;
+)
     """
     )
     c.execute(
@@ -64,7 +64,8 @@ def initialize_tables_if_not_exists():
             `action` text NOT NULL,
             PRIMARY KEY (`log_id`),
             KEY `user` (`user`),
-            CONSTRAINT `user_logs_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`username`);
+            CONSTRAINT `user_logs_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`username`)
+)
     """
     )
     c.execute(
@@ -75,8 +76,8 @@ def initialize_tables_if_not_exists():
   `status` enum('offline','online') NOT NULL DEFAULT 'offline',
   PRIMARY KEY (`session_id`),
   KEY `username` (`username`),
-  CONSTRAINT `user_sessions_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`))
-;
+  CONSTRAINT `user_sessions_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
+)
         """
     )
     c.close()
