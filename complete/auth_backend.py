@@ -30,7 +30,7 @@ def initialize_tables_if_not_exists():
     c = conn.cursor()
     c.execute(
         """
-    CREATE TABLE `users` (
+    CREATE TABLE IF NOT EXISTS `users` (
     `user_id` int(11) NOT NULL AUTO_INCREMENT,
     `username` varchar(255) DEFAULT NULL,
     `password` text DEFAULT NULL,
@@ -43,7 +43,7 @@ def initialize_tables_if_not_exists():
     )
     c.execute(
         """
-        CREATE TABLE `user_messages` (
+        CREATE TABLE IF NOT EXISTS `user_messages` (
   `message_id` int(11) NOT NULL AUTO_INCREMENT,
   `sender` varchar(255) NOT NULL,
   `recipient` varchar(255) NOT NULL,
@@ -58,7 +58,7 @@ def initialize_tables_if_not_exists():
     )
     c.execute(
         """
-        CREATE TABLE `user_logs` (
+         CREATE TABLE IF NOT EXISTS  `user_logs` (
             `log_id` int(11) NOT NULL AUTO_INCREMENT,
             `user` varchar(255) NOT NULL,
             `action` text NOT NULL,
@@ -69,7 +69,7 @@ def initialize_tables_if_not_exists():
     )
     c.execute(
         """
-    CREATE TABLE `user_sessions` (
+     CREATE TABLE IF NOT EXISTS `user_sessions` (
   `session_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `status` enum('offline','online') NOT NULL DEFAULT 'offline',
