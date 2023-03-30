@@ -3,6 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PIL.ImageQt import ImageQt
 from auth_backend import *
 from messages import Message
+from client import Client
 
 
 class Ui_MainWindow(object):
@@ -13,6 +14,7 @@ class Ui_MainWindow(object):
         self.session_manager = Session()
         self.log_manager = Log()
         self.message_manager = Message()
+        self.client = Client()
 
         initialize_tables_if_not_exists()
 
@@ -443,6 +445,7 @@ class Ui_MainWindow(object):
             sender,
             f"Sent a message '{message[:15]}'... to {recipient}",
         )
+        self.client.send_message(message)
 
     def switch_reset(self):
         # go to the reset tab
@@ -458,6 +461,7 @@ class Ui_MainWindow(object):
 
     def logout(self):
         self.session_manager.set_offline()
+        self.client.end_connection()
         self.stackedWidget.setCurrentIndex(1)
 
     def login(self):
@@ -486,6 +490,8 @@ class Ui_MainWindow(object):
                 successBox.setText(f"You Have Logged In Successfully")
                 successBox.setIcon(QtWidgets.QMessageBox.Information)
                 successBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                self.client.get_username(nickname)
+                self.client.create_connection()
                 self.session_manager.get_active_users()
                 user_index = 0
                 for active_user in self.session_manager.active_users:

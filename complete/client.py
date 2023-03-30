@@ -13,13 +13,12 @@ class Client:
     def __init__(self):
         self.server = "127.0.0.1"
         self.port = 8394
-        self.username = self.get_username()
-        self.key_pairs = self.create_key_pairs()
+        self.username = str()
+        self.key_pairs = dict()
 
     ###### set the username
-    def get_username(self):
-        username = input("Enter your username: ")
-        return username
+    def get_username(self, username):
+        self.username = username
 
     ###### Create the connection to the server
     def create_connection(self):
@@ -57,7 +56,9 @@ class Client:
         input_handler.start()
 
     ####### Handle receiving messages
-    def handle_messages(self):
+    def handle_messages(
+        self,
+    ):
         while True:
             message = self.s.recv(1024).decode()
             if message:
@@ -120,7 +121,17 @@ class Client:
         self.s.shutdown(socket.SHUT_RDWR)
         os._exit(0)
 
-    ###### Receiving the secret key for symmetric encryption
+    def send_message(self, message):
+        key = secret_key
+        cipher = AES.new(key, AES.MODE_CFB)
+        message_to_encrypt = self.username + ": " + message
+        msgBytes = message_to_encrypt.encode()
+        encrypted_message = cipher.encrypt(msgBytes)
+        iv = b64encode(cipher.iv).decode("utf-8")
+        message = b64encode(encrypted_message).decode("utf-8")
+        result = json.dumps({"iv": iv, "ciphertext": message})
+        self.s.send(result.encode())
+
 
     ###### Receiving the secret key for symmetric encryption
     def handle_secret(self):
@@ -159,13 +170,19 @@ class Client:
             private_pem = private_key.exportKey().decode()
             public_pem = public_key.exportKey().decode()
             keys = {"private": private_pem, "public": public_pem}
-            return keys
-
+            self.key_pairs = keys
         except Exception as e:
             print(colored("[!] ERROR, something went wrong: " + str(e), "red"))
             return None
 
+    def end_connection(self):
+        # Send a message to the server to notify that the client is disconnecting
+        self.s.send("EXIT".encode())
+        print(colored("[+] Closing down the connection", "yellow"))
+        self.s.close()
+        os._exit(0)
 
-if __name__ == "__main__":
-    client = Client()
-    client.create_connection()
+
+# if __name__ == "__main__":
+#     client = Client()
+#     client.create_connection()
