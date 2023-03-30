@@ -30,47 +30,53 @@ def initialize_tables_if_not_exists():
     c = conn.cursor()
     c.execute(
         """
-    CREATE TABLE IF NOT EXISTS "users" (
-        "user_id" INTEGER,
-        "username" TEXT,
-        "password" TEXT,
-        "salt" TEXT,
-        "secret_key" TEXT,
-        PRIMARY KEY("user_id" AUTOINCREMENT)
+    CREATE TABLE `users` (
+    `user_id` int(11) NOT NULL AUTO_INCREMENT,
+    `username` varchar(255) DEFAULT NULL,
+    `password` text DEFAULT NULL,
+    `salt` text DEFAULT NULL,
+    `secret_key` text DEFAULT NULL,
+    PRIMARY KEY (`user_id`),
+    UNIQUE KEY `username` (`username`)
     );
-"""
-    )
-    c.execute(
-        """
-        CREATE TABLE IF NOT EXISTS "user_messages" (
-            "message_id"	INTEGER,
-            "sender"	TEXT NOT NULL,
-            "recipient"	TEXT NOT NULL,
-            "content"	TEXT NOT NULL,
-            PRIMARY KEY("message_id" AUTOINCREMENT)
-);
     """
     )
     c.execute(
         """
-        CREATE TABLE IF NOT EXISTS "user_logs" (
-            "log_id"	INTEGER,
-            "username"	TEXT NOT NULL,
-            "action"	TEXT NOT NULL,
-            FOREIGN KEY("username") REFERENCES "users"("username"),
-            PRIMARY KEY("log_id" AUTOINCREMENT)
-);
+        CREATE TABLE `user_messages` (
+  `message_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sender` varchar(255) NOT NULL,
+  `recipient` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  PRIMARY KEY (`message_id`),
+  KEY `sender` (`sender`),
+  KEY `recipient` (`recipient`),
+  CONSTRAINT `user_messages_ibfk_1` FOREIGN KEY (`sender`) REFERENCES `users` (`username`),
+  CONSTRAINT `user_messages_ibfk_2` FOREIGN KEY (`recipient`) REFERENCES `users` (`username`)
+;
     """
     )
     c.execute(
         """
-    CREATE TABLE IF NOT EXISTS "user_sessions" (
-        "session_id"	INTEGER,
-        "username"	TEXT NOT NULL,
-        "status"	TEXT NOT NULL DEFAULT 'offline',
-        FOREIGN KEY("username") REFERENCES "users"("username"),
-        PRIMARY KEY("session_id" AUTOINCREMENT)
-        );
+        CREATE TABLE `user_logs` (
+            `log_id` int(11) NOT NULL AUTO_INCREMENT,
+            `user` varchar(255) NOT NULL,
+            `action` text NOT NULL,
+            PRIMARY KEY (`log_id`),
+            KEY `user` (`user`),
+            CONSTRAINT `user_logs_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`username`);
+    """
+    )
+    c.execute(
+        """
+    CREATE TABLE `user_sessions` (
+  `session_id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `status` enum('offline','online') NOT NULL DEFAULT 'offline',
+  PRIMARY KEY (`session_id`),
+  KEY `username` (`username`),
+  CONSTRAINT `user_sessions_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
+;
         """
     )
     c.close()

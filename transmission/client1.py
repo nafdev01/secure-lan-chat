@@ -11,7 +11,7 @@ from Crypto.Random import get_random_bytes
 
 class Client:
     def __init__(self):
-        self.server = "127.0.0.1"
+        self.server = "10.1.46.237"
         self.port = 8394
         self.username = self.get_username()
         self.key_pairs = self.create_key_pairs()

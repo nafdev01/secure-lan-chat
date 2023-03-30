@@ -9,7 +9,7 @@ import atexit
 
 class Server:
     def __init__(self):
-        self.host = "127.0.0.1"
+        self.host = "10.1.46.237"
         self.port = 8394
         self.key_pairs = self.create_key_pairs()
 
