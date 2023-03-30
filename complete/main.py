@@ -2,7 +2,6 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PIL.ImageQt import ImageQt
 from auth_backend import *
-from messages import Message
 from client import Client
 
 
@@ -10,6 +9,7 @@ class Ui_MainWindow(object):
     def __init__(self):
         super().__init__()
         self.signup_form = SignUp()
+        self.reset_form = Reset()
         self.login_form = LogIn()
         self.session_manager = Session()
         self.log_manager = Log()
@@ -416,6 +416,7 @@ class Ui_MainWindow(object):
         self.buttonGoToActiveChat.clicked.connect(self.go_to_active_chat)
         self.buttonLogOut.clicked.connect(self.logout)
         self.buttonSign.clicked.connect(self.sign_up)
+        self.buttonReset.clicked.connect(self.reset_password)
 
     def connect_server(self):
         self.stackedWidget.setCurrentIndex(1)
@@ -492,6 +493,8 @@ class Ui_MainWindow(object):
                 successBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
                 self.client.get_username(nickname)
                 self.client.create_connection()
+                self.session_manager.set_username(nickname)
+                self.session_manager.set_online(nickname)
                 self.session_manager.get_active_users()
                 user_index = 0
                 for active_user in self.session_manager.active_users:
@@ -502,7 +505,6 @@ class Ui_MainWindow(object):
 
                 self.message_manager.set_sender(nickname)
                 self.log_manager.submit_log(nickname, "Successfully logged in")
-                self.session_manager.set_online(nickname)
                 self.signup_form.reset(
                     self.inputNickLog,
                     self.inputPassLog,
@@ -535,6 +537,7 @@ class Ui_MainWindow(object):
             if not self.signup_form.get_user(nickname):
                 create_user = self.signup_form.store_user_info()
                 if create_user:
+                    self.session_manager.start_session(nickname, "offline")
                     self.log_manager.submit_log(nickname, "Successful sign up")
                     self.signup_form.reset(
                         self.inputNickSign,
@@ -564,6 +567,53 @@ class Ui_MainWindow(object):
             errorBox.setIcon(QtWidgets.QMessageBox.Critical)
             errorBox.setStandardButtons(QtWidgets.QMessageBox.Retry)
             for field, error in self.signup_form.errors.items():
+                formErrors += f"{error}\n"
+                formErrorFields += f"{field}, "
+            errorBox.setText(formErrors)
+            errorBox.exec_()
+
+    def reset_password(self):
+        nickname = self.inputNickReset.text()
+        password = self.inputPassReset.text()
+        confirm_password = self.inputPassConfReset.text()
+        two_factor_code = self.input2FAReset.text()
+        self.reset_form.process_form(nickname, password, confirm_password, two_factor_code)
+        self.reset_form.validate_form()
+        if self.reset_form.is_valid:
+            if self.reset_form.get_user():
+                create_user = self.reset_form.store_user_info()
+                if create_user:
+                    self.session_manager.start_session(nickname, "offline")
+                    self.log_manager.submit_log(nickname, "Successful Password Reset")
+                    self.reset_form.reset(
+                        self.inputNickReset,
+                        self.inputPassReset,
+                        self.inputPassConfReset,
+                        self.input2FAReset,
+                    )
+                    successBox = QtWidgets.QMessageBox()
+                    successBox.setWindowTitle("Success")
+                    successBox.setText("You Have Reset Your Password Successfully")
+                    successBox.setIcon(QtWidgets.QMessageBox.Information)
+                    successBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                    self.authTabs.setCurrentIndex(0)
+                    successBox.exec_()
+            else:
+                self.log_manager.submit_log(nickname, "Failed reset")
+                errorBox = QtWidgets.QMessageBox()
+                errorBox.setWindowTitle("Reset Errors")
+                errorBox.setText("User with that nickname does not exist")
+                errorBox.setIcon(QtWidgets.QMessageBox.Critical)
+                errorBox.setStandardButtons(QtWidgets.QMessageBox.Retry)
+                errorBox.exec_()
+        else:
+            formErrors = str()
+            formErrorFields = str()
+            errorBox = QtWidgets.QMessageBox()
+            errorBox.setWindowTitle("Signup Errors")
+            errorBox.setIcon(QtWidgets.QMessageBox.Critical)
+            errorBox.setStandardButtons(QtWidgets.QMessageBox.Retry)
+            for field, error in self.reset_form.errors.items():
                 formErrors += f"{error}\n"
                 formErrorFields += f"{field}, "
             errorBox.setText(formErrors)

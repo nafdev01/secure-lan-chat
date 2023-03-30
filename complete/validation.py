@@ -61,3 +61,10 @@ class ConfirmPasswordValidator(FormValidator):
             self.errors["confirm_password"] = "Confirm password is required"
         elif password != confirm_password:
             self.errors["confirm_password"] = "Passwords do not match"
+
+
+class TwoFactorValidator(FormValidator):
+    def validate(self):
+        two_factor_code = self.data.get("two_factor_code")
+        if not two_factor_code:
+            self.errors["two_factor_code"] = "Enter Two Factor Code"
