@@ -9,9 +9,11 @@ executing
 ifaddr
 ipython
 jedi
+mariadb
 matplotlib-inline
 mpmath
 mypy-extensions
+mysql-connector-python
 netifaces
 packaging
 parso
@@ -21,6 +23,7 @@ pickleshare
 Pillow
 platformdirs
 prompt-toolkit
+protobuf
 psutil
 ptyprocess
 pure-eval

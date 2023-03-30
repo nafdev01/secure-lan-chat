@@ -1,48 +1,30 @@
+import mariadb
 
-import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton
-from client import Client
+# Set the database configuration parameters
+config = {
+    "user": "secure_admin",
+    "password": "Annda8*j3s_Dje",
+    "host": "10.1.133.254",
+    "database": "secure_chat",
+    "port": 3306,
+}
 
-class MainWindow(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Chat Client")
-        self.setGeometry(100, 100, 400, 150)
+# Connect to the remote database server
+try:
+    conn = mariadb.connect(**config)
+except mariadb.Error as e:
+    print(f"Error connecting to MariaDB: {e}")
+    exit()
 
-        # Create widgets
-        self.username_label = QLabel("Username:")
-        self.username_input = QLineEdit()
-        self.username_input.setText("student")
-        self.send_button = QPushButton("Send")
-        self.send_button.clicked.connect(self.send_message)
+# Execute a query on the remote database
+cursor = conn.cursor()
+query = "SELECT * FROM users"
+cursor.execute(query)
 
-        # Create layout
-        input_layout = QHBoxLayout()
-        input_layout.addWidget(self.username_label)
-        input_layout.addWidget(self.username_input)
+# Process the query results
+for row in cursor:
+    print(row)
 
-        button_layout = QHBoxLayout()
-        button_layout.addStretch()
-        button_layout.addWidget(self.send_button)
-
-        main_layout = QVBoxLayout()
-        main_layout.addLayout(input_layout)
-        main_layout.addLayout(button_layout)
-
-        self.setLayout(main_layout)
-
-        # Initialize client
-        self.client = Client()
-
-    def send_message(self):
-        username = self.username_input.text()
-        message = "Hello from {}".format(username)
-        self.client.get_username(username)
-        self.client.create_key_pairs()
-        self.client.send_message(message)
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec_())
+# Close the database connection
+cursor.close()
+conn.close()
