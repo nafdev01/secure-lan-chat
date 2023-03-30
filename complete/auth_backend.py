@@ -137,13 +137,13 @@ class Log:
         c = conn.cursor()
         # execute the update query
         c.execute(
-            "INSERT INTO user_logs (username, action) VALUES (?, ?)",
+            "INSERT INTO user_logs (username, action) VALUES (%s, %s)",
             (username, action),
         )
         # commit the changes to the database
         conn.commit()
-        # close the database connection
-        conn.close()
+        # close the cursor
+        c.close()
 
 
 class SignUp:
