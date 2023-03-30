@@ -7,10 +7,26 @@ import sqlite3
 import random
 import string
 
+import mariadb
+
+# Set the database configuration parameters
+config = {
+    "user": "secure_admin",
+    "password": "Annda8*j3s_Dje",
+    "host": "10.1.133.254",
+    "database": "secure_chat",
+    "port": 3306,
+}
+
+# Connect to the remote database server
+try:
+    conn = mariadb.connect(**config)
+except mariadb.Error as e:
+    print(f"Error connecting to MariaDB: {e}")
+    exit()
+
 
 def initialize_tables_if_not_exists():
-    conn = sqlite3.connect("secure_chat.db")
-    conn.row_factory = sqlite3.Row
     c = conn.cursor()
     c.execute(
         """
@@ -57,7 +73,7 @@ def initialize_tables_if_not_exists():
         );
         """
     )
-
+    c.close()
     conn.close()
 
 
@@ -76,10 +92,7 @@ class Session:
         self.status = "offline"
         self.update_session(self.username, self.status)
 
-
     def get_active_users(self):
-        # connect to the database
-        conn = sqlite3.connect("secure_chat.db")
         # create a cursor object
         c = conn.cursor()
         # execute the select query to get the usernames of online users
@@ -96,8 +109,6 @@ class Session:
         self.active_users = usernames
 
     def update_session(self, username, status):
-        # connect to the database
-        conn = sqlite3.connect("secure_chat.db")
         # create a cursor object
         c = conn.cursor()
         # execute the update query
@@ -115,8 +126,6 @@ class Session:
 
 class Log:
     def submit_log(self, username, action):
-        # connect to the database
-        conn = sqlite3.connect("secure_chat.db")
         # create a cursor object
         c = conn.cursor()
         # execute the update query
@@ -193,8 +202,6 @@ class SignUp:
         return [img, self.secret_key]
 
     def get_user(self, username):
-        conn = sqlite3.connect("secure_chat.db")
-        conn.row_factory = sqlite3.Row
         c = conn.cursor()
         c.execute("SELECT username FROM users WHERE username=?", (username,))
         user = c.fetchone()
@@ -213,7 +220,6 @@ class SignUp:
 
     def store_user_info(self):
         self.hashed_password = self.hash_password()
-        conn = sqlite3.connect("secure_chat.db")
         c = conn.cursor()
         c.execute(
             "INSERT INTO users (username, password, salt, secret_key) VALUES (?, ?, ?, ?)",
@@ -281,7 +287,6 @@ class LogIn:
 
     def get_user(self):
         # Connect to the database
-        conn = sqlite3.connect("secure_chat.db")
         c = conn.cursor()
 
         # Query the database for the user with the given username
