@@ -532,7 +532,6 @@ class Ui_MainWindow(object):
         self.signup_form.process_form(nickname, password, confirm_password)
         self.signup_form.validate_form()
         if self.signup_form.is_valid:
-            self.buttonSign.adjustSize()
             if not self.signup_form.get_user(nickname):
                 create_user = self.signup_form.store_user_info()
                 if create_user:

@@ -1,9 +1,7 @@
-import sqlite3
 import hashlib
 from validation import *
 import pyotp
 import qrcode
-import sqlite3
 import random
 import string
 
@@ -17,13 +15,6 @@ config = {
     "database": "secure_chat",
     "port": 3306,
 }
-
-# Connect to the remote database server
-try:
-    conn = mariadb.connect(**config)
-except mariadb.Error as e:
-    print(f"Error connecting to MariaDB: {e}")
-    exit()
 
 
 def initialize_tables_if_not_exists():
@@ -166,7 +157,6 @@ class Log:
         conn.commit()
         # close the cursor
         cursor.close()
-        conn.close()
 
 
 class SignUp:
@@ -238,7 +228,7 @@ class SignUp:
             print(f"Error connecting to MariaDB: {e}")
             exit()
         cursor = conn.cursor()
-        cursor.execute("SELECT username FROM users WHERE username=?", (username,))
+        cursor.execute("SELECT username FROM users WHERE username=%s", (username,))
         user = cursor.fetchone()
         conn.close()
         if user:
@@ -254,30 +244,28 @@ class SignUp:
         return hashed_password
 
     def store_user_info(self):
+        self.hashed_password = self.hash_password()
         try:
             conn = mariadb.connect(**config)
         except mariadb.Error as e:
             print(f"Error connecting to MariaDB: {e}")
             exit()
-        self.hashed_password = self.hash_password()
         cursor = conn.cursor()
-        cursor.execute(
-            "INSERT INTO users (username, password, salt, secret_key) VALUES (?, ?, ?, ?)",
-            (
-                self.username,
-                self.hashed_password,
-                self.salt,
-                self.secret_key,
-            ),
-        )
-        cursor.execute(
-            "INSERT INTO user_sessions (username, status) VALUES (?, ?)",
-            (self.username, "offline"),
-        )
-        cursor.close()
-        conn.close()
 
-        return "User information stored successfully"
+        query = "INSERT INTO users (username, password, salt, secret_key) VALUES (?, ?, ?, ?)"
+        values = (self.username, self.hashed_password, self.salt, self.secret_key)
+
+        try:
+            cursor.execute(query, values)
+            conn.commit()
+            return True
+        except mariadb.Error as e:
+            print(f"Error: {e}")
+            conn.rollback()
+            return False
+        finally:
+            cursor.close()
+            conn.close()
 
     def reset(self, username, password, confirm_password):
         self.__init__()
