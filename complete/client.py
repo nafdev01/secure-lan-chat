@@ -15,10 +15,15 @@ class Client:
         self.port = 8394
         self.username = str()
         self.key_pairs = dict()
+        self.display_field = None
+        self.send_button = None
 
     ###### set the username
     def get_username(self, username):
         self.username = username
+
+    def set_display_field(self, display_field):
+        self.display_field = display_field
 
     ###### Create the connection to the server
     def create_connection(self):
@@ -56,9 +61,7 @@ class Client:
         input_handler.start()
 
     ####### Handle receiving messages
-    def handle_messages(
-        self,
-    ):
+    def handle_messages(self):
         while True:
             message = self.s.recv(1024).decode()
             if message:
@@ -83,6 +86,7 @@ class Client:
                         "green",
                     )
                 )  # It produces a byte encoded output so you have to decode it to display as string
+                self.display_field.append(f"{msg.decode()}")
             else:
                 print(colored("[!] Lost the connection to the server", "red"))
                 print(colored("[!] Closing down the connection", "red"))
@@ -132,7 +136,6 @@ class Client:
         result = json.dumps({"iv": iv, "ciphertext": message})
         self.s.send(result.encode())
 
-
     ###### Receiving the secret key for symmetric encryption
     def handle_secret(self):
         secret_key = self.s.recv(
@@ -180,7 +183,6 @@ class Client:
         self.s.send("EXIT".encode())
         print(colored("[+] Closing down the connection", "yellow"))
         self.s.close()
-
 
 
 # if __name__ == "__main__":

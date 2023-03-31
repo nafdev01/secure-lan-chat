@@ -456,6 +456,7 @@ class Ui_MainWindow(object):
 
     def delete_messages(self):
         self.archive_manager.delete_messages()
+        self.displayMessageArchive.clear()
         successBox = QtWidgets.QMessageBox()
         successBox.setWindowTitle("Deleted")
         successBox.setText("You have deleted your messages")
@@ -486,6 +487,7 @@ class Ui_MainWindow(object):
         self.stackedWidget.setCurrentIndex(2)
 
     def logout(self):
+        self.displayMessageActive.clear()
         self.session_manager.set_offline()
         self.client.end_connection()
         self.stackedWidget.setCurrentIndex(1)
@@ -517,6 +519,7 @@ class Ui_MainWindow(object):
                 successBox.setIcon(QtWidgets.QMessageBox.Information)
                 successBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
                 self.client.get_username(nickname)
+                self.client.set_display_field(self.displayMessageActive)
                 self.client.create_connection()
                 self.session_manager.set_username(nickname)
                 self.session_manager.set_online(nickname)
