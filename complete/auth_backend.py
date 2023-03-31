@@ -11,7 +11,7 @@ import mariadb
 config = {
     "user": "secure_admin",
     "password": "Annda8*j3s_Dje",
-    "host": "10.1.46.237",
+    "host": "192.168.51.103",
     "database": "secure_chat",
     "port": 3306,
     "ssl_ca": "/home/aegis/Code/cert/ca-cert.pem",
