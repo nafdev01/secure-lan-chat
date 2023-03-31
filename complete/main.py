@@ -15,6 +15,7 @@ class Ui_MainWindow(object):
         self.log_manager = Log()
         self.message_manager = Message()
         self.client = Client()
+        self.archive_manager = Archive()
 
         initialize_tables_if_not_exists()
 
@@ -417,6 +418,7 @@ class Ui_MainWindow(object):
         self.buttonLogOut.clicked.connect(self.logout)
         self.buttonSign.clicked.connect(self.sign_up)
         self.buttonReset.clicked.connect(self.reset_password)
+        self.buttonDeleteHistory.clicked.connect(self.delete_messages)
 
     def connect_server(self):
         self.stackedWidget.setCurrentIndex(1)
@@ -452,12 +454,35 @@ class Ui_MainWindow(object):
         # go to the reset tab
         self.authTabs.setCurrentIndex(2)
 
+    def delete_messages(self):
+        self.archive_manager.delete_messages()
+        successBox = QtWidgets.QMessageBox()
+        successBox.setWindowTitle("Deleted")
+        successBox.setText("You have deleted your messages")
+        successBox.setIcon(QtWidgets.QMessageBox.Information)
+        successBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+        successBox.exec_()
+        self.stackedWidget.setCurrentIndex(2)
+
     def go_to_archive(self):
-        # go to the archives window
+        username = self.session_manager.username
+        self.archive_manager.set_username(username)
+        messages = self.archive_manager.get_messages()
+        if messages:
+            for message in self.archive_manager.messages:
+                self.displayMessageArchive.append(f"{message[0]}: {message[1]}')")
+            successBox = QtWidgets.QMessageBox()
+            successBox.setWindowTitle("Archive")
+            successBox.setText("You Are Viewing Archived Messages")
+            successBox.setIcon(QtWidgets.QMessageBox.Information)
+            successBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            self.authTabs.setCurrentIndex(0)
+            successBox.exec_()
         self.stackedWidget.setCurrentIndex(3)
 
     def go_to_active_chat(self):
         # go to the archives window
+        self.displayMessageArchive.clear()
         self.stackedWidget.setCurrentIndex(2)
 
     def logout(self):
@@ -577,7 +602,9 @@ class Ui_MainWindow(object):
         password = self.inputPassReset.text()
         confirm_password = self.inputPassConfReset.text()
         two_factor_code = self.input2FAReset.text()
-        self.reset_form.process_form(nickname, password, confirm_password, two_factor_code)
+        self.reset_form.process_form(
+            nickname, password, confirm_password, two_factor_code
+        )
         self.reset_form.validate_form()
         if self.reset_form.is_valid:
             if self.reset_form.get_user():

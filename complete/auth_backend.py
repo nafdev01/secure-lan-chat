@@ -14,6 +14,9 @@ config = {
     "host": "10.1.46.237",
     "database": "secure_chat",
     "port": 3306,
+    "ssl_ca": "/home/aegis/Code/cert/ca-cert.pem",
+    "ssl_cert": "/home/aegis/Code/cert/client-cert.pem",
+    "ssl_key": "/home/aegis/Code/cert/client-key.pem",
 }
 
 
@@ -542,3 +545,60 @@ class Reset:
         password.setText("")
         confirm_password.setText("")
         two_factor_code.setText("")
+
+
+class Archive:
+    def __init__(self):
+        self.username = None
+
+    def set_username(self, username):
+        self.username = username
+
+    def get_messages(self):
+        try:
+            conn = mariadb.connect(**config)
+        except mariadb.Error as e:
+            print(f"Error connecting to MariaDB: {e}")
+            exit()
+        # Connect to the database
+        cursor = conn.cursor()
+
+        # Query the database for the user with the given username
+        cursor.execute(
+            "SELECT recipient, content FROM user_messages WHERE sender=?",
+            (self.username,),
+        )
+        user = cursor.fetchall()
+
+        cursor.close()
+        conn.close()
+        # If the user was found, return their details as a dictionary
+        if user is not None:
+            self.messages = user
+            return self.messages
+        else:
+            return None
+
+    def delete_messages(self):
+        try:
+            conn = mariadb.connect(**config)
+        except mariadb.Error as e:
+            print(f"Error connecting to MariaDB: {e}")
+            exit()
+        # create a cursor object
+        cursor = conn.cursor()
+        # execute the update query
+        query = "DELETE FROM user_messages WHERE sender = ?;"
+        values = (self.username,)
+
+        try:
+            cursor.execute(query, values)
+            conn.commit()
+            return True
+        except mariadb.Error as e:
+            print(f"Error: {e}")
+            conn.rollback()
+            return False
+        finally:
+            cursor.close()
+            conn.close()

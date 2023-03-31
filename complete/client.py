@@ -180,7 +180,7 @@ class Client:
         self.s.send("EXIT".encode())
         print(colored("[+] Closing down the connection", "yellow"))
         self.s.close()
-        os._exit(0)
+
 
 
 # if __name__ == "__main__":
