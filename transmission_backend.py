@@ -11,7 +11,7 @@ from Crypto.Random import get_random_bytes
 
 class Client:
     def __init__(self):
-        self.server = "192.168.51.103"
+        self.server = "192.168.177.103"
         self.port = 8394
         self.username = str()
         self.key_pairs = dict()
@@ -32,7 +32,7 @@ class Client:
         try:
             self.s.connect((self.server, self.port))
         except Exception as e:
-            print(colored("[!] " + e, "red"))
+            print(colored("[!] " + str(e), "red"))
 
         ####### Initial message exchanges for the communication
         ####### Setting up username, keys
@@ -183,8 +183,3 @@ class Client:
         self.s.send("EXIT".encode())
         print(colored("[+] Closing down the connection", "yellow"))
         self.s.close()
-
-
-# if __name__ == "__main__":
-#     client = Client()
-#     client.create_connection()

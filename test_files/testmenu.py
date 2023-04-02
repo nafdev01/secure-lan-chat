@@ -46,13 +46,13 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         # Create four actions for the menus
-        self.actionNew = QtWidgets.QAction(MainWindow)
+        self.actionNew = QtGui.QAction(MainWindow)
         self.actionNew.setObjectName("actionNew")
-        self.actionSave = QtWidgets.QAction(MainWindow)
+        self.actionSave = QtGui.QAction(MainWindow)
         self.actionSave.setObjectName("actionSave")
-        self.actionCopy = QtWidgets.QAction(MainWindow)
+        self.actionCopy = QtGui.QAction(MainWindow)
         self.actionCopy.setObjectName("actionCopy")
-        self.actionPaste = QtWidgets.QAction(MainWindow)
+        self.actionPaste = QtGui.QAction(MainWindow)
         self.actionPaste.setObjectName("actionPaste")
 
         # Add the actions to the menus

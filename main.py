@@ -1,8 +1,10 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PIL.ImageQt import ImageQt
-from auth_backend import *
-from client import Client
+from session_backend import Session, Log, initialize_tables_if_not_exists
+from message_backend import Message, Archive
+from transmission_backend import Client
+from auth_backend import SignUp, LogIn, Reset
 
 
 class Ui_MainWindow(object):
@@ -408,6 +410,7 @@ class Ui_MainWindow(object):
         self.authTabs.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        # button listeners
         self.buttonConnServer.clicked.connect(self.connect_server)
         self.button2FAGen.clicked.connect(self.generate_qrcode)
         self.buttonLogin.clicked.connect(self.login)
@@ -821,8 +824,6 @@ class Ui_MainWindow(object):
 
 
 if __name__ == "__main__":
-    import sys
-
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
