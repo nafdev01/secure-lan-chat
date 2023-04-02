@@ -3,7 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PIL.ImageQt import ImageQt
 from session_backend import Session, Log, initialize_tables_if_not_exists
 from message_backend import Message, Archive
-from transmission_backend import Client
+from client_backend import Client
 from auth_backend import SignUp, LogIn, Reset
 
 
@@ -613,7 +613,7 @@ class Ui_MainWindow(object):
         )
         self.reset_form.validate_form()
         if self.reset_form.is_valid:
-            if self.reset_form.get_user():
+            if self.reset_form.authenticate_user():
                 create_user = self.reset_form.store_user_info()
                 if create_user:
                     self.session_manager.start_session(nickname, "offline")
@@ -635,7 +635,7 @@ class Ui_MainWindow(object):
                 self.log_manager.submit_log(nickname, "Failed reset")
                 errorBox = QtWidgets.QMessageBox()
                 errorBox.setWindowTitle("Reset Errors")
-                errorBox.setText("User with that nickname does not exist")
+                errorBox.setText("User with those credentials does not exist")
                 errorBox.setIcon(QtWidgets.QMessageBox.Critical)
                 errorBox.setStandardButtons(QtWidgets.QMessageBox.Retry)
                 errorBox.exec_()
