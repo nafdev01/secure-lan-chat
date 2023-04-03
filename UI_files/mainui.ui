@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>796</width>
-    <height>600</height>
+    <height>578</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>761</width>
-      <height>531</height>
+      <x>10</x>
+      <y>10</y>
+      <width>781</width>
+      <height>561</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -30,20 +30,39 @@
      <widget class="QPushButton" name="buttonConnServer">
       <property name="geometry">
        <rect>
-        <x>260</x>
-        <y>220</y>
-        <width>211</width>
-        <height>91</height>
+        <x>270</x>
+        <y>250</y>
+        <width>151</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>25</pointsize>
+        <pointsize>18</pointsize>
+        <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
       <property name="text">
        <string>CONNECT</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>180</y>
+        <width>261</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="placeholderText">
+       <string>Enter the Server IP Address</string>
       </property>
      </widget>
     </widget>
@@ -93,6 +112,7 @@
         </property>
         <property name="font">
          <font>
+          <weight>75</weight>
           <bold>true</bold>
           <underline>false</underline>
          </font>
@@ -131,6 +151,7 @@
         </property>
         <property name="font">
          <font>
+          <weight>75</weight>
           <bold>true</bold>
           <underline>false</underline>
          </font>
@@ -169,6 +190,7 @@
         </property>
         <property name="font">
          <font>
+          <weight>75</weight>
           <bold>true</bold>
           <underline>false</underline>
          </font>
@@ -189,6 +211,7 @@
         <property name="font">
          <font>
           <pointsize>15</pointsize>
+          <weight>75</weight>
           <bold>true</bold>
           <underline>false</underline>
          </font>
@@ -209,6 +232,7 @@
         <property name="font">
          <font>
           <pointsize>14</pointsize>
+          <weight>75</weight>
           <italic>false</italic>
           <bold>true</bold>
           <underline>true</underline>
@@ -230,6 +254,7 @@
         <property name="font">
          <font>
           <pointsize>10</pointsize>
+          <weight>50</weight>
           <bold>false</bold>
           <underline>false</underline>
          </font>
@@ -293,6 +318,7 @@
         </property>
         <property name="font">
          <font>
+          <weight>75</weight>
           <bold>true</bold>
           <underline>false</underline>
          </font>
@@ -328,6 +354,7 @@
         </property>
         <property name="font">
          <font>
+          <weight>75</weight>
           <bold>true</bold>
           <underline>false</underline>
          </font>
@@ -385,6 +412,7 @@
         </property>
         <property name="font">
          <font>
+          <weight>75</weight>
           <bold>true</bold>
           <underline>false</underline>
          </font>
@@ -405,6 +433,7 @@
         <property name="font">
          <font>
           <pointsize>15</pointsize>
+          <weight>75</weight>
           <bold>true</bold>
           <underline>false</underline>
          </font>
@@ -441,6 +470,7 @@
         <property name="font">
          <font>
           <pointsize>14</pointsize>
+          <weight>75</weight>
           <italic>false</italic>
           <bold>true</bold>
           <underline>true</underline>
@@ -484,6 +514,7 @@
         <property name="font">
          <font>
           <pointsize>10</pointsize>
+          <weight>50</weight>
           <bold>false</bold>
           <underline>false</underline>
          </font>
@@ -508,6 +539,7 @@
         </property>
         <property name="font">
          <font>
+          <weight>75</weight>
           <bold>true</bold>
           <underline>false</underline>
          </font>
@@ -527,6 +559,7 @@
         </property>
         <property name="font">
          <font>
+          <weight>75</weight>
           <bold>true</bold>
           <underline>false</underline>
          </font>
@@ -606,6 +639,7 @@
         </property>
         <property name="font">
          <font>
+          <weight>75</weight>
           <bold>true</bold>
           <underline>false</underline>
          </font>
@@ -625,6 +659,7 @@
         </property>
         <property name="font">
          <font>
+          <weight>75</weight>
           <bold>true</bold>
           <underline>false</underline>
          </font>
@@ -667,6 +702,7 @@
         <property name="font">
          <font>
           <pointsize>14</pointsize>
+          <weight>75</weight>
           <italic>false</italic>
           <bold>true</bold>
           <underline>true</underline>
@@ -688,6 +724,7 @@
         <property name="font">
          <font>
           <pointsize>10</pointsize>
+          <weight>50</weight>
           <bold>false</bold>
           <underline>false</underline>
          </font>
@@ -708,6 +745,7 @@
         <property name="font">
          <font>
           <pointsize>15</pointsize>
+          <weight>75</weight>
           <bold>true</bold>
           <underline>false</underline>
          </font>
@@ -732,6 +770,7 @@
       <property name="font">
        <font>
         <pointsize>15</pointsize>
+        <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
@@ -810,6 +849,7 @@
       <property name="font">
        <font>
         <pointsize>13</pointsize>
+        <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
@@ -829,6 +869,7 @@
       <property name="font">
        <font>
         <pointsize>11</pointsize>
+        <weight>50</weight>
         <bold>false</bold>
        </font>
       </property>
@@ -854,6 +895,7 @@
       <property name="font">
        <font>
         <pointsize>11</pointsize>
+        <weight>50</weight>
         <bold>false</bold>
        </font>
       </property>
@@ -894,6 +936,7 @@
       <property name="font">
        <font>
         <pointsize>14</pointsize>
+        <weight>75</weight>
         <italic>false</italic>
         <bold>true</bold>
         <underline>true</underline>
@@ -915,6 +958,7 @@
       <property name="font">
        <font>
         <pointsize>11</pointsize>
+        <weight>50</weight>
         <bold>false</bold>
        </font>
       </property>
@@ -940,6 +984,7 @@
       <property name="font">
        <font>
         <pointsize>11</pointsize>
+        <weight>50</weight>
         <bold>false</bold>
        </font>
       </property>
@@ -955,34 +1000,6 @@
      </widget>
     </widget>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>796</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuFIle">
-    <property name="title">
-     <string>FIle</string>
-    </property>
-    <addaction name="actionRefresh"/>
-    <addaction name="actionClose"/>
-    <addaction name="actionMinimize"/>
-   </widget>
-   <widget class="QMenu" name="menuActions">
-    <property name="title">
-     <string>Actions</string>
-    </property>
-    <addaction name="actionCopy"/>
-    <addaction name="actionCut"/>
-    <addaction name="actionPaste"/>
-   </widget>
-   <addaction name="menuFIle"/>
-   <addaction name="menuActions"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionQuit">

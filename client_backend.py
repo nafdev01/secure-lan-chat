@@ -10,7 +10,7 @@ from base64 import b64encode, b64decode
 
 class Client:
     def __init__(self):
-        self.server = "192.168.177.103"
+        self.server = "192.168.241.103"
         self.port = 8394
         self.username = str()
         self.key_pairs = dict()

@@ -5,7 +5,7 @@ from validation_backend import *
 config = {
     "user": "secure_admin",
     "password": "Annda8*j3s_Dje",
-    "host": "192.168.177.103",
+    "host": "192.168.241.103",
     "database": "secure_chat",
     "port": 3306,
     "ssl_ca": "/home/aegis/Code/team_project/cert/ca-cert.pem",
@@ -15,64 +15,67 @@ config = {
 
 
 def initialize_tables_if_not_exists():
+    success = True
     try:
         conn = mariadb.connect(**config)
-    except mariadb.Error as e:
-        print(f"Error connecting to MariaDB: {e}")
-        exit()
-    cursor = conn.cursor()
-    cursor.execute(
-        """
-    CREATE TABLE IF NOT EXISTS `users` (
-    `user_id` int(11) NOT NULL AUTO_INCREMENT,
-    `username` varchar(255) DEFAULT NULL,
-    `password` text DEFAULT NULL,
-    `salt` text DEFAULT NULL,
-    `secret_key` text DEFAULT NULL,
-    PRIMARY KEY (`user_id`),
-    UNIQUE KEY `username` (`username`)
-    )
-    """
-    )
-    cursor.execute(
+
+        cursor = conn.cursor()
+        
+        for query in ["""
+        CREATE TABLE IF NOT EXISTS `users` (
+        `user_id` int(11) NOT NULL AUTO_INCREMENT,
+        `username` varchar(255) DEFAULT NULL,
+        `password` text DEFAULT NULL,
+        `salt` text DEFAULT NULL,
+        `secret_key` text DEFAULT NULL,
+        PRIMARY KEY (`user_id`),
+        UNIQUE KEY `username` (`username`)
+        )
+        """, 
         """
         CREATE TABLE IF NOT EXISTS `user_messages` (
-  `message_id` int(11) NOT NULL AUTO_INCREMENT,
-  `sender` varchar(255) NOT NULL,
-  `recipient` varchar(255) NOT NULL,
-  `content` text NOT NULL,
-  PRIMARY KEY (`message_id`),
-  KEY `sender` (`sender`),
-  KEY `recipient` (`recipient`),
-  CONSTRAINT `user_messages_ibfk_1` FOREIGN KEY (`sender`) REFERENCES `users` (`username`),
-  CONSTRAINT `user_messages_ibfk_2` FOREIGN KEY (`recipient`) REFERENCES `users` (`username`)
-)
-    """
-    )
-    cursor.execute(
+        `message_id` int(11) NOT NULL AUTO_INCREMENT,
+        `sender` varchar(255) NOT NULL,
+        `recipient` varchar(255) NOT NULL,
+        `content` text NOT NULL,
+        PRIMARY KEY (`message_id`),
+        KEY `sender` (`sender`),
+        KEY `recipient` (`recipient`),
+        CONSTRAINT `user_messages_ibfk_1` FOREIGN KEY (`sender`) REFERENCES `users` (`username`),
+        CONSTRAINT `user_messages_ibfk_2` FOREIGN KEY (`recipient`) REFERENCES `users` (`username`)
+        )
+        """, 
         """
-         CREATE TABLE IF NOT EXISTS  `user_logs` (
-            `log_id` int(11) NOT NULL AUTO_INCREMENT,
-            `user` varchar(255) NOT NULL,
-            `action` text NOT NULL,
-            PRIMARY KEY (`log_id`)
-)
-    """
-    )
-    cursor.execute(
+        CREATE TABLE IF NOT EXISTS  `user_logs` (
+        `log_id` int(11) NOT NULL AUTO_INCREMENT,
+        `user` varchar(255) NOT NULL,
+        `action` text NOT NULL,
+        PRIMARY KEY (`log_id`)
+        )
+        """, 
         """
-     CREATE TABLE IF NOT EXISTS `user_sessions` (
-  `session_id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL,
-  `status` enum('offline','online') NOT NULL DEFAULT 'offline',
-  PRIMARY KEY (`session_id`),
-  KEY `username` (`username`),
-  CONSTRAINT `user_sessions_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
-)
-        """
-    )
-    cursor.close()
-    conn.close()
+        CREATE TABLE IF NOT EXISTS `user_sessions` (
+        `session_id` int(11) NOT NULL AUTO_INCREMENT,
+        `username` varchar(255) NOT NULL,
+        `status` enum('offline','online') NOT NULL DEFAULT 'offline',
+        PRIMARY KEY (`session_id`),
+        KEY `username` (`username`),
+        CONSTRAINT `user_sessions_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
+        )
+        """]:
+            try:
+                cursor.execute(query)
+            except mariadb.Error as e:
+                success = False
+        cursor.close()
+        conn.close()
+
+    except mariadb.Error as e:
+        print(f"Error connecting to MariaDB: {e}")
+        success = False
+
+
+    return success
 
 
 class Session:

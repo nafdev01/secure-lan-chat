@@ -1,10 +1,12 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMessageBox
 from PIL.ImageQt import ImageQt
 from session_backend import Session, Log, initialize_tables_if_not_exists
 from message_backend import Message, Archive
 from client_backend import Client
 from auth_backend import SignUp, LogIn, Reset
+from PyQt5.QtGui import QCloseEvent
 
 
 class Ui_MainWindow(object):
@@ -850,7 +852,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         event.ignore()
         if answer == QtWidgets.QMessageBox.Yes:
-            self.logout()
             event.accept()
 
 # if __name__ == "__main__":
