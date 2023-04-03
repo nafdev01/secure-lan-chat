@@ -1,6 +1,10 @@
 import mariadb
 from validation_backend import *
+import os
 
+current_dir = os.getcwd()
+
+# Set the database configuration parameters
 # Set the database configuration parameters
 config = {
     "user": "secure_admin",
@@ -8,11 +12,10 @@ config = {
     "host": "192.168.241.103",
     "database": "secure_chat",
     "port": 3306,
-    "ssl_ca": "/home/aegis/Code/team_project/cert/ca-cert.pem",
-    "ssl_cert": "/home/aegis/Code/team_project/cert/client-cert.pem",
-    "ssl_key": "/home/aegis/Code/team_project/cert/client-key.pem",
+    "ssl_ca": os.path.join(current_dir, "cert", "ca-cert.pem"),
+    "ssl_cert": os.path.join(current_dir, "cert", "client-cert.pem"),
+    "ssl_key": os.path.join(current_dir, "cert", "client-key.pem"),
 }
-
 
 def initialize_tables_if_not_exists():
     success = True
