@@ -476,7 +476,9 @@ class Ui_MainWindow(object):
         # Clear input box
         self.inputMessageActive.clear()
         # Add message to chat display
-        self.displayMessageActive.append(f"{sender}: {message}")
+        self.displayMessageActive.append(
+            f"{sender}: {message}"
+        )
         self.message_manager.send_message(recipient, message)
         self.log_manager.submit_log(
             sender,
@@ -821,12 +823,6 @@ class Ui_MainWindow(object):
             _translate("MainWindow", "Reset Password"),
         )
         self.buttonMessageSendActive.setText(_translate("MainWindow", "SEND"))
-        self.comboRecipientActive.setItemText(0, _translate("MainWindow", "Everyone"))
-        self.comboRecipientActive.setItemText(1, _translate("MainWindow", "First User"))
-        self.comboRecipientActive.setItemText(
-            2, _translate("MainWindow", "Second User")
-        )
-        self.comboRecipientActive.setItemText(3, _translate("MainWindow", "Third Year"))
         self.labelSendToActive.setText(_translate("MainWindow", "Send To:"))
         self.buttonGoToArchive.setText(_translate("MainWindow", "Archived Messages"))
         self.buttonLogOut.setText(_translate("MainWindow", "Log Out"))

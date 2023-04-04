@@ -23,13 +23,11 @@ class UserNameValidator(FormValidator):
             self.errors["username"] = "Username must be at least 6 characters"
 
 
-class EmailValidator(FormValidator):
+class SecretKeyValidator(FormValidator):
     def validate(self):
-        email = self.data.get("email")
-        if not email:
-            self.errors["email"] = "Email is required"
-        elif not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-            self.errors["email"] = "Invalid email address"
+        secret_key = self.data.get("secret_key")
+        if not secret_key:
+            self.errors["secret_key"] = "Generate a QRCode Before You Scan"
 
 
 class PasswordValidator(FormValidator):
@@ -69,6 +67,4 @@ class TwoFactorValidator(FormValidator):
     def validate(self):
         two_factor_code = self.data.get("two_factor_code")
         if not two_factor_code:
-            self.errors["two_factor_code"] = "Two factor code is required"
-        elif len(two_factor_code) != 6:
-            self.errors["two_factor_code"] = "Two factor code is 6 characters long"
+            self.errors["two_factor_code"] = "Enter Two Factor Code"

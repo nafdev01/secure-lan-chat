@@ -30,7 +30,7 @@
      <widget class="QPushButton" name="buttonConnServer">
       <property name="geometry">
        <rect>
-        <x>270</x>
+        <x>300</x>
         <y>250</y>
         <width>151</width>
         <height>41</height>
@@ -47,19 +47,22 @@
        <string>CONNECT</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="inputAddress">
       <property name="geometry">
        <rect>
         <x>230</x>
-        <y>180</y>
-        <width>261</width>
-        <height>61</height>
+        <y>200</y>
+        <width>301</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <pointsize>14</pointsize>
        </font>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
       <property name="placeholderText">
        <string>Enter the Server IP Address</string>
