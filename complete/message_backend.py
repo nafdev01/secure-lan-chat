@@ -16,11 +16,11 @@ class Message:
     def initialize_server(self, server_address):
         self.server_address = server_address
         self.config = {
-            "user": "secure_admin",
-            "password": "Annda8*j3s_Dje",
-            "host": f"{server_address}",
-            "database": "secure_chat",
-            "port": 3306,
+            "user": os.environ.get("DB_USER", "secure_admin"),
+            "password": os.environ.get("DB_PASSWORD", "Annda8*j3s_Dje"),
+            "host": server_address,
+            "database": os.environ.get("DB_NAME", "secure_chat"),
+            "port": int(os.environ.get("DB_PORT", 3306)),
         }
 
     def set_sender(self, username):
@@ -58,11 +58,11 @@ class Archive:
     def initialize_server(self, server_address):
         self.server_address = server_address
         self.config = {
-            "user": "secure_admin",
-            "password": "Annda8*j3s_Dje",
-            "host": f"{server_address}",
-            "database": "secure_chat",
-            "port": 3306,
+            "user": os.environ.get("DB_USER", "secure_admin"),
+            "password": os.environ.get("DB_PASSWORD", "Annda8*j3s_Dje"),
+            "host": server_address,
+            "database": os.environ.get("DB_NAME", "secure_chat"),
+            "port": int(os.environ.get("DB_PORT", 3306)),
         }
 
     def set_username(self, username):

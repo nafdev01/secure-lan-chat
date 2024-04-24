@@ -8,6 +8,7 @@ from Crypto.Cipher import PKCS1_OAEP
 from base64 import b64encode, b64decode
 import sys
 
+
 class Client:
     def __init__(self):
         self.server = None
