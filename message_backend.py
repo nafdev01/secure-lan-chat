@@ -1,5 +1,6 @@
-import mariadb
 import os
+
+import mariadb
 
 current_dir = os.getcwd()
 

@@ -1,12 +1,17 @@
-import os, random, string, datetime
-import json, socket, threading, argparse
+import argparse
+import datetime
+import json
+import os
+import random
+import socket
+import string
+import threading
+from base64 import b64decode, b64encode
 
-from termcolor import colored
-from Crypto.Cipher import AES
+from Crypto.Cipher import AES, PKCS1_OAEP
 from Crypto.PublicKey import RSA
-from Crypto.Cipher import PKCS1_OAEP
-from base64 import b64encode, b64decode
 from Crypto.Random import get_random_bytes
+from termcolor import colored
 
 
 class Client:

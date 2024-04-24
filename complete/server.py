@@ -1,10 +1,16 @@
-import socket, threading, argparse
-import random, string, os, datetime
-from Crypto.PublicKey import RSA
+import argparse
+import atexit
+import datetime
+import os
+import random
+import socket
+import string
+import threading
+
 from Crypto.Cipher import PKCS1_OAEP
+from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
 from termcolor import colored
-import atexit
 
 
 class Server:

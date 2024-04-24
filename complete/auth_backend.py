@@ -1,11 +1,13 @@
 import hashlib
-from validation_backend import *
-import pyotp
-import qrcode
+import os
 import random
 import string
-import os
+
 import mariadb
+import pyotp
+import qrcode
+
+from validation_backend import *
 
 current_dir = os.getcwd()
 

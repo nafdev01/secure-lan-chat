@@ -1,18 +1,19 @@
-import os, random, string, datetime
-import json, socket, threading, argparse
+import datetime
+import json
+import os
+import socket
+import threading
+from base64 import b64decode, b64encode
 
-from termcolor import colored
-from Crypto.Cipher import AES
+from Crypto.Cipher import AES, PKCS1_OAEP
 from Crypto.PublicKey import RSA
-from Crypto.Cipher import PKCS1_OAEP
-from base64 import b64encode, b64decode
-import sys
+from termcolor import colored
 
 
 class Client:
     def __init__(self):
         self.server = None
-        self.port = 8394
+        self.port = int(os.getenv("SERVER_PORT", 8394))
         self.username = str()
         self.key_pairs = dict()
         self.display_field = None

@@ -1,16 +1,21 @@
-import socket, threading, argparse
-import random, string, os, datetime
-from Crypto.PublicKey import RSA
+import datetime
+import os
+import socket
+import threading
+
 from Crypto.Cipher import PKCS1_OAEP
+from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
+from dotenv import load_dotenv
 from termcolor import colored
-import atexit
+
+load_dotenv()
 
 
 class Server:
     def __init__(self):
-        self.host = input("Enter your IP address: ")
-        self.port = 8394
+        self.host = os.getenv("SERVER_HOST", "127.0.0.1")
+        self.port = int(os.getenv("SERVER_PORT", 8394))
         self.key_pairs = self.create_key_pairs()
 
     def start_server(self):

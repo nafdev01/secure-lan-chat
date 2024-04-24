@@ -1,6 +1,8 @@
-import mariadb
-from validation_backend import *
 import os
+
+import mariadb
+
+from validation_backend import *
 
 current_dir = os.getcwd()
 

@@ -1,11 +1,15 @@
 import sys
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PIL.ImageQt import ImageQt
-from session_backend import Session, Log
-from message_backend import Message, Archive
-from client_backend import Client
-from auth_backend import SignUp, LogIn, Reset
 
+from dotenv import load_dotenv
+from PIL.ImageQt import ImageQt
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+from auth_backend import LogIn, Reset, SignUp
+from client_backend import Client
+from message_backend import Archive, Message
+from session_backend import Log, Session
+
+load_dotenv()
 _translate = QtCore.QCoreApplication.translate
 
 
