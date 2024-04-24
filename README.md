@@ -6,32 +6,28 @@ This is a PyQt5 group chat application designed with a focus on security. It enf
 
 This PyQt5 group chat application is designed with a strong focus on security and user-friendly interface. Here are the key features:
 
-### Two-Factor Authentication (2FA)
-The application enforces 2FA both at the time of sign up and sign in. This means that users will need to provide two different types of identification to access their account, making it harder for unauthorized users to gain access.
+#### 1. Two-Factor Authentication (2FA)
 
-### SSL Encryption for Database Operations
-All database operations are secured with SSL encryption. This means that any data sent between the application and the database is encrypted, making it unreadable to anyone who might intercept it. This is crucial for protecting sensitive information like user credentials and chat messages.
+The application enforces 2FA at sign in. Users are required to provide two different types of identification to access their account:
 
-### AES and RSA for Chat Communication
-The application uses two different encryption algorithms to secure chat communication: AES (Advanced Encryption Standard) and RSA (Rivest–Shamir–Adleman). AES is used for encrypting the actual chat messages, while RSA is used for securely sharing the AES keys between users.
+- **Password**: Users must provide their password as the first factor of authentication. The password follows the default password policy, which requires a minimum of 8 characters, including at least one uppercase letter, one lowercase letter, one number, and one special character.
+- **Google Authenticator**: The second factor of authentication involves using the Google Authenticator app, which generates a time-based one-time password (TOTP) for additional verification. The 2FA code is registered at sign up and is required at sign in.
 
-### User Action Logging
-The application keeps a log of all user actions, including authentication actions and signing up. This can be useful for tracking user behavior, identifying potential security threats, and debugging issues.
+This dual authentication process enhances the security of user accounts by adding an extra layer of protection against unauthorized access.
+#### 2. SSL Encryption for Database Operations
+The application uses MariaDB as its database. To secure database operations, the application uses SSL encryption. This ensures that data transmitted between the application and the database is encrypted and secure. SSL encryption helps protect sensitive information, such as user credentials and chat messages, from being intercepted.
 
-### Randomized Salt for Password Storage
-To protect user passwords, the application uses a technique called "salting". A random "salt" value is generated for each user and combined with their password before it's hashed and stored. This makes it much harder for attackers to use precomputed tables (like rainbow tables) to crack the passwords.
+#### 3. AES and RSA for Chat Communication
+For sending messages, the application uses a socket server. This allows for real-time communication between users, as messages can be pushed to the recipient as soon as they're sent. The application uses two different encryption algorithms to secure chat communication: AES (Advanced Encryption Standard) and RSA (Rivest–Shamir–Adleman). AES is used for encrypting the actual chat messages, while RSA is used for securely sharing the AES keys between users (digital envelope).
 
-### Message Storage and Deletion
-The application stores all chat messages, allowing users to view their chat history. Users also have the ability to delete their messages if they wish.
+#### 4. User Action Logging
+The application keeps a log of all user actions, such as sign-ins, sign-outs, and message sends. This log helps track user activity and provides an audit trail for security purposes. By logging user actions, the application can detect and investigate any suspicious or unauthorized activities.
 
-### MariaDB Database
-The application uses MariaDB, a popular open-source relational database, for storing user data and chat messages. MariaDB is known for its speed and reliability, making it a great choice for this application.
+#### 5. Randomized Salt for Password Storage
+To protect user passwords, the application uses a technique called "salting". A random "salt" value is generated for each user and combined with their password before it's hashed and stored. This adds an extra layer of security to the password storage process, making it more difficult for attackers to crack passwords using common techniques like rainbow tables or password lists.
 
-### Direct Database Communication
-For most operations, the application communicates directly with the database. This allows for efficient data retrieval and manipulation.
-
-### Socket Server for Message Transmission
-For sending messages, the application uses a socket server. This allows for real-time communication between users, as messages can be pushed to the recipient as soon as they're sent.
+#### 6. Message Storage and Deletion
+The application stores all chat messages, allowing users to view their message history. Users can also delete messages, removing them from the chat history. This feature gives users control over their chat data and privacy, allowing them to manage their messages as needed.
 
 ## Setup Instructions
 
@@ -61,6 +57,7 @@ For sending messages, the application uses a socket server. This allows for real
     SERVER_HOST="127.0.0.1"
     SERVER_PORT=3000
     ```
+5. Create and store the SSL certificates in the `cert` directory. The certificates should be named `server.crt` and `server.key`.
 
 ## Usage
 
