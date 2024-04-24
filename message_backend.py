@@ -22,6 +22,9 @@ class Message:
             "host": server_address,
             "database": os.environ.get("DB_NAME", "secure_chat"),
             "port": int(os.environ.get("DB_PORT", 3306)),
+            "ssl_ca": os.path.join(current_dir, "cert", "ca-cert.pem"),
+            "ssl_cert": os.path.join(current_dir, "cert", "client-cert.pem"),
+            "ssl_key": os.path.join(current_dir, "cert", "client-key.pem"),
         }
 
     def set_sender(self, username):
@@ -64,6 +67,9 @@ class Archive:
             "host": server_address,
             "database": os.environ.get("DB_NAME", "secure_chat"),
             "port": int(os.environ.get("DB_PORT", 3306)),
+            "ssl_ca": os.path.join(current_dir, "cert", "ca-cert.pem"),
+            "ssl_cert": os.path.join(current_dir, "cert", "client-cert.pem"),
+            "ssl_key": os.path.join(current_dir, "cert", "client-key.pem"),
         }
 
     def set_username(self, username):
