@@ -91,9 +91,6 @@ class Session:
             "host": f"{server_address}",
             "database": "secure_chat",
             "port": 3306,
-            "ssl_ca": os.path.join(current_dir, "cert", "ca-cert.pem"),
-            "ssl_cert": os.path.join(current_dir, "cert", "client-cert.pem"),
-            "ssl_key": os.path.join(current_dir, "cert", "client-key.pem"),
         }
 
     def set_online(self, username):
@@ -186,9 +183,6 @@ class Log:
             "host": f"{server_address}",
             "database": "secure_chat",
             "port": 3306,
-            "ssl_ca": os.path.join(current_dir, "cert", "ca-cert.pem"),
-            "ssl_cert": os.path.join(current_dir, "cert", "client-cert.pem"),
-            "ssl_key": os.path.join(current_dir, "cert", "client-key.pem"),
         }
 
     def submit_log(self, username, action):
